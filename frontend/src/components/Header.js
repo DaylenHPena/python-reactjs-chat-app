@@ -8,10 +8,10 @@ const Header = () => {
     <div>
       <Link to="/">Home</Link>
       {!user &&
-        <Fragment>
+        <>
           <p>Hello Anonymus</p>
           <Link to="/login">Login</Link>
-        </Fragment>
+        </>
 
       }
       {user && <p>Welcome {user.username}</p> && <p onClick={logoutUser}>Logout</p> }

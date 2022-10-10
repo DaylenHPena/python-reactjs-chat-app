@@ -13,6 +13,8 @@ from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import os
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -28,11 +30,15 @@ ALLOWED_HOSTS = []
 
 # Application definition
 LOCAL_APPS = [
-    'users'
+    "chat",
+    'users',
 ]
 THIRD_APPS = [
+    "channels",
+    "channels_redis",
     "corsheaders",
     'rest_framework',
+    'widget_tweaks'
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -42,7 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     *THIRD_APPS,
-    *LOCAL_APPS
+    *LOCAL_APPS,
 ]
 
 MIDDLEWARE = [
@@ -62,7 +68,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -145,3 +151,14 @@ SIMPLE_JWT = {
 
 #CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ORIGINS = ('http://localhost:3000',)
+
+#CHANNELS
+ASGI_APPLICATION = 'core.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}

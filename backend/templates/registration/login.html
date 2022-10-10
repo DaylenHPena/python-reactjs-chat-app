@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+    <!--Register-->
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <h1>Login</h1>
+            <form method="POST">
+                {% csrf_token %}
+                {% include 'includes/_form_field_render.html' %}
+                <input type="submit" value="login" class="btn btn-primary">
+                <input type="hidden" name="next" value="{{ next }}">
+            </form>
+
+            <p>Don't have an account? <a href="">Register </a>today!</p>
+        </div>
+        <div class="col-4"></div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Room</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'vendors/bootstrap-5.0.2-dist/css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/chat_style.css' %}" type="text/css">
+    <link href="{% static 'vendors/font-awesome/css/font-awesome.css' %}" rel="stylesheet">
+    {% block stylesheet %}
+    {% endblock stylesheet %}
+</head>
+
+<body>
+{% if messages %}
+    {% for message in messages %}
+        <div class="{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+<div id="full-container" class="row px-2 ">
+
+
+    <!-- LEFT PANEL -->
+    <div id="rooms-col" class="col-2 bg-dark-style text-white p-0">
+        {% block content_left %}
+        {% endblock content_left %}
+     <nav>
+            <ul class="d-flex justify-content-evenly list-unstyled ">
+                <li><a href=""><span class="fa fa-gear"></span></a></li>
+            </ul>
+
+        </nav>
+    </div>
+    <!-- RIGHT PANEL -->
+    <div id="messages-col" class="col bg-light p-0">
+        {% block content %}
+        {% endblock content %}
+    </div>
+</div>
+
+
+<script src="{% static 'vendors/jquery.min.js' %}"></script>
+<script src="{% static 'vendors/popper.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js' %}"></script>
+
+
+{% block javascript %}
+{% endblock javascript %}
+</body>
+</html>

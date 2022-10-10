@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+    <!--Register-->
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <h1>Register</h1>
+            <form method="POST">
+                {% csrf_token %}
+                {% include 'includes/_form_field_render.html' %}
+                <button class="btn btn-primary mt-3" type="submit">Register</button>
+            </form>
+            <p>The password must contain at least 8 characters.</p>
+            <p class="text-center">If you already have an account, <a href="{% url 'login' %}">login</a> instead.</p>
+        </div>
+        <div class="col-4"></div>
+    </div>
+
+
+{% endblock %}

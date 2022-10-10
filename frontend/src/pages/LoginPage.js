@@ -7,7 +7,7 @@ import AuthContext from "../context/AuthContext";
 
 function LoginPage() {
 
-    let {loginUser} = useContext(AuthContext)
+    let { loginUser } = useContext(AuthContext)
 
     const formik = useFormik({
         initialValues: {
@@ -15,43 +15,61 @@ function LoginPage() {
             password: "",
         },
         onSubmit: async (values) => {
-           loginUser(values)
+            loginUser(values)
         }
 
     })
 
     return (
-        <div className="row">
-            <div className="col-4"></div>
-            <div className="col-3">
-                <h2 >Login</h2>
-                <form onSubmit={formik.handleSubmit}>
-                    <div>
-                        <label className="form-label">User</label>
-                        <input id="username"
-                            name="username"
-                            placeholder="Enter username"
-                            type='text'
-                            className="form-control"
-                            value={formik.values.username}
-                            onChange={formik.handleChange}
-                        ></input>
+        <div className="container bg-light">
+            <div className="justify-content-center row">
+                <div className="col-md-8 col-lg-6 col-xl-5">
+                    <div className="text-center mb-4">
+                        <h4>Sign in</h4>
                     </div>
-                    <div>
-                        <label className="form-label">Password</label>
-                        <input id="password"
-                            name="password"
-                            type='password'
-                            placeholder="Enter your password"
-                            className="form-control"
-                            value={formik.values.password}
-                            onChange={formik.handleChange}
-                        ></input>
+
+                    <div className="card">
+                        <div className="p-5 card-body">
+                            <form onSubmit={formik.handleSubmit} className="p-5 left">
+
+                                <div className="form-group">
+                                    <label className="form-label">Username</label>
+                                    <div className="input-group mb-3">
+                                        <span className="input-group-text" id="basic-addon1">@</span>
+                                        <input id="username"
+                                            name="username"
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Enter username"
+                                            value={formik.values.username}
+                                            onChange={formik.handleChange}
+                                            aria-label="Username"
+                                            aria-describedby="basic-addon1">
+                                        </input>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="form-label">Password</label>
+                                    <div className="input-group mb-3">
+                                        <span className="input-group-text" id="basic-addon1"><span className="fas fa-user"></span></span>
+                                        <input id="password"
+                                            name="password"
+                                            type='password'
+                                            placeholder="Enter your password"
+                                            className="form-control"
+                                            value={formik.values.password}
+                                            onChange={formik.handleChange}
+                                            aria-label="Username"
+                                            aria-describedby="basic-addon1">
+                                        </input>
+                                    </div>
+                                </div>
+                                <button className="btn btn-primary m-3" type="submit">Sign in</button>
+                            </form>
+                        </div>
                     </div>
-                    <button className="btn btn-primary m-3" type="submit">Login</button>
-                </form>
+                </div>
             </div>
-            <div className="col"></div>
         </div>
     )
 }
