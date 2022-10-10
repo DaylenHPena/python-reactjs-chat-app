@@ -12,7 +12,7 @@ class ChatRoom(models.Model):
     ROOM_TYPE = ((PRIVATE, 'PRIVATE'),
                  (GROUP, 'GROUP'))
 
-    channel_name = models.CharField(max_length=12, null=True)
+    name = models.CharField(max_length=12, null=True)
     users = models.ManyToManyField(User)
     room_type = models.PositiveSmallIntegerField(choices=ROOM_TYPE, default=PRIVATE)
 

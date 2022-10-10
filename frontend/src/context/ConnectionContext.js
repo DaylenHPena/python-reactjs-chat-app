@@ -9,13 +9,6 @@ export const ConnectionProvider = ({ children }) => {
     const url = 'ws://127.0.0.1:8000/ws/chat/hello/';
     const chatSocket = new WebSocket(url);
 
-    let onMessage = () => {
-       chatSocket.onmessage = (message) => {
-            //console.log('message', JSON.parse(message.data));
-            return JSON.parse(message.data)
-        }
-    }
-
     let onOpen = () => {
         chatSocket.onopen = () => {
             console.log('WebSocket Client Connected');
@@ -24,7 +17,6 @@ export const ConnectionProvider = ({ children }) => {
 
     let state = {
         'client': chatSocket,
-        'onMessage': onMessage,
         'onOpen': onOpen
     }
 

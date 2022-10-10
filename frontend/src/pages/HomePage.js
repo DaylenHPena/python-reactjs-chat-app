@@ -5,27 +5,43 @@ import UserConf from '../components/UserConf'
 import { API_CHATS } from '../constants';
 import ConnectionContext from '../context/ConnectionContext';
 
-//const url = 'ws://127.0.0.1:8000/ws/chat/hello/';
-//const chatSocket = new WebSocket(url);
 
-const getChats = async () => {
-  let response = await fetch(API_CHATS, {
-    method: "GET",
-    headers: {
-      'Content-Type': 'application/json',
-    }
-  })
-
-  let data = await response.json()
-  console.log('getChats data', data)
-}
 
 function HomePage() {
-  let { client, onOpen } = useContext(ConnectionContext)
+  let { onOpen } = useContext(ConnectionContext)
 
   const [chats, setchats] = useState([])
 
-  useEffect(() => { onOpen() })
+  const getChats = async () => {
+    let response = await fetch(API_CHATS, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+
+    let data = await response.json()
+
+    if (data != chats) {
+      //console.log('getChats data', data)
+    }
+
+    return data;
+  }
+
+  useEffect(() => {
+    onOpen()
+  })
+
+  useEffect(() => {
+    async function fetchData() {
+      let initial = await getChats()
+      setchats(initial)
+    }
+    fetchData()
+  }, [])
+
+
 
   return (
     <Fragment>

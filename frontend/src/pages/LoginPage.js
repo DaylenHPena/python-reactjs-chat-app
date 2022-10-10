@@ -2,9 +2,6 @@ import { useFormik } from "formik";
 import React, { useContext } from 'react'
 import AuthContext from "../context/AuthContext";
 
-
-
-
 function LoginPage() {
 
     let { loginUser } = useContext(AuthContext)
@@ -17,7 +14,6 @@ function LoginPage() {
         onSubmit: async (values) => {
             loginUser(values)
         }
-
     })
 
     return (

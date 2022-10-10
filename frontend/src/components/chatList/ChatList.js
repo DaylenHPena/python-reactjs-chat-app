@@ -1,25 +1,18 @@
 import React, { Fragment, Component } from 'react'
 import ChatThumbnail from './ChatThumbnail'
 
+function ChatList(props) {
+    return (
+        <>
+            <ul className='list-group'>
+                {props.chats.map(chat => (
+                    <><h3>un chat</h3>
+                        <li ><ChatThumbnail chat={chat}></ChatThumbnail></li></>
+                ))}
 
-export class ChatList extends Component {
-    constructor(props) {
-        super(props)
-        this.state = { ...props }
-    }
-    render() {
-        console.log('this.state.chats', this.state.chats)
-        return (
-            <Fragment>
-                <ul className='list-group'>
-                    {this.state.chats.map(chat => {
-                        return (<li key={chat.pk}><ChatThumbnail {...chat}></ChatThumbnail></li>)
-                    })}
-                </ul>
-            </Fragment>
-        )
-    }
+            </ul>
+        </>
+    )
 }
-
 
 export default ChatList
