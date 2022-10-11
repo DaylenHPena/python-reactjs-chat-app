@@ -4,7 +4,7 @@ from rest_framework.routers import DefaultRouter
 from ..api.views import ChatsViewSet
 
 router = DefaultRouter()
-router.register('api/chats', ChatsViewSet)
+router.register('chats', ChatsViewSet)
 
 urlpatterns = [
     path('', include(router.urls))

@@ -6,7 +6,7 @@ export default ConnectionContext;
 
 
 export const ConnectionProvider = ({ children }) => {
-    const url = 'ws://127.0.0.1:8000/ws/chat/hello/';
+    const url = 'ws://127.0.0.1:8000/ws/chat/ghello/';
     const chatSocket = new WebSocket(url);
 
     let onOpen = () => {

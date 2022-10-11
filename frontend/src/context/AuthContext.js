@@ -8,11 +8,9 @@ export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
 
-    let fromStorage = localStorage.getItem('authTokens')
-    //console.log('fromStorage', fromStorage)
-
-    let [authTokens, setAuthTokens] = useState(() => fromStorage ? JSON.parse(fromStorage) : null)
-    let [user, setUser] = useState(() => fromStorage ? jwt_decode(fromStorage.access) : null)
+    let [refreshToken, setRefreshToken] = useState(() => localStorage.getItem('refreshToken') ? JSON.parse(localStorage.getItem('refreshToken')) : null)
+    let [accessToken, setAccessToken] = useState(() => localStorage.getItem('accessToken') ? JSON.parse(localStorage.getItem('accessToken')) : null)
+    let [user, setUser] = useState(() => localStorage.getItem('accessToken') ? jwt_decode(localStorage.getItem('accessToken')) : null)
     let [loading, setLoading] = useState(true)
 
     let navigate = useNavigate()
@@ -29,11 +27,13 @@ export const AuthProvider = ({ children }) => {
         let data = await response.json()
 
         if (response.status === 200) {
-            setAuthTokens(data)
+            setRefreshToken(data.refresh)
+            setAccessToken(data.access)
             let access = data.access
             if (access) {
                 setUser(jwt_decode(access))
-                localStorage.setItem('authTokens', JSON.stringify(data))
+                localStorage.setItem('refreshToken', JSON.stringify(data.refresh))
+                localStorage.setItem('accessToken', JSON.stringify(data.access))
                 navigate('/')
             } else { alert('Invalid Token') }
         } else {
@@ -43,9 +43,11 @@ export const AuthProvider = ({ children }) => {
     }
 
     let logoutUser = () => {
-        setAuthTokens(null)
         setUser(null)
-        localStorage.removeItem('authTokens')
+        setRefreshToken(null)
+        setAccessToken(null)
+        localStorage.removeItem('refreshToken')
+        localStorage.removeItem('accessToken')
         navigate('/login')
     }
 
@@ -56,17 +58,15 @@ export const AuthProvider = ({ children }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ 'refresh': authTokens.refresh })
+                body: JSON.stringify({ 'refresh': refreshToken })
             })
 
             let data = await response.json()
 
             if (response.status === 200) {
-                authTokens['access'] = data.access
-                setAuthTokens(authTokens)
+                setAccessToken(data.access)
                 setUser(jwt_decode(data.access))
-                localStorage.setItem('authTokens', JSON.stringify(data))
-                // console.log('updated token')
+                localStorage.setItem('accessToken', JSON.stringify(data.access))
             } else {
                 console.log('error', response.status)
             }
@@ -74,9 +74,9 @@ export const AuthProvider = ({ children }) => {
             if (loading) {
                 setLoading(false)
             }
-
+            console.log('acces updated')
         } catch (error) {
-            console.error('Error updating token: ')
+            console.error('Error updating token: ', error)
 
         }
 
@@ -87,13 +87,13 @@ export const AuthProvider = ({ children }) => {
             updateToken()
         }
 
-        const fourminutes = 1000 * 600 * 4
+        const fourminutes = 1000 * 600 *4
         let interval = setInterval(() => {
-            if (authTokens) { updateToken() }
+            if (refreshToken) { updateToken() }
         }, fourminutes);
 
         return () => clearInterval(interval)
-    }, [authTokens, loading])
+    }, [refreshToken, loading])
 
 
     let state = {
