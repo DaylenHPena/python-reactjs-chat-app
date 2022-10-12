@@ -8,7 +8,8 @@ function ChatInput() {
     e.preventDefault();
     client.send(JSON.stringify({
       'message': e.target.message.value,
-      'name': 'Test'
+      'user_id': 'Test',
+      'receiver':''
     }));
     e.target.message.value = '';
   }

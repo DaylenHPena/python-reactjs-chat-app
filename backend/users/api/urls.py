@@ -1,18 +1,18 @@
 from django.urls import path, include
 from rest_framework import routers
 
-from ..api.views import MyTokenObtainPairView
-from ..api.views import UserViewSet
+from ..api.views import MyTokenObtainPairView, UserViewSet, RegistrationView
 
 router = routers.DefaultRouter()
-router.register('users', UserViewSet)
+router.register('users', UserViewSet,basename='users')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls'))
+    path('auth/', include('rest_framework.urls')),
+    path('auth/registration/', RegistrationView.as_view(),name='registration')
 ]
 
-#---- rest_framework_simplejwt ---------------------------------
+# ---- rest_framework_simplejwt ---------------------------------
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )

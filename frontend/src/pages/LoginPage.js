@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import React, { useContext } from 'react'
+import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
 function LoginPage() {
@@ -24,14 +25,13 @@ function LoginPage() {
                         <h4>Sign in</h4>
                     </div>
 
-                    <div className="card">
+                    <div className="card ">
                         <div className="p-5 card-body">
-                            <form onSubmit={formik.handleSubmit} className="p-5 left">
-
+                            <form onSubmit={formik.handleSubmit} className="p-5 text-start">
                                 <div className="form-group">
                                     <label className="form-label">Username</label>
                                     <div className="input-group mb-3">
-                                        <span className="input-group-text" id="basic-addon1">@</span>
+                                        <span className="input-group-text" id="basic-addon1"><span className="fa fa-user-circle-o"></span></span>
                                         <input id="username"
                                             name="username"
                                             type="text"
@@ -44,10 +44,10 @@ function LoginPage() {
                                         </input>
                                     </div>
                                 </div>
-                                <div>
+                                <div className="form-group  mb-5">
                                     <label className="form-label">Password</label>
                                     <div className="input-group mb-3">
-                                        <span className="input-group-text" id="basic-addon1"><span className="fas fa-user"></span></span>
+                                        <span className="input-group-text" id="basic-addon1"><span className="fa fa-lock"></span></span>
                                         <input id="password"
                                             name="password"
                                             type='password'
@@ -60,8 +60,10 @@ function LoginPage() {
                                         </input>
                                     </div>
                                 </div>
-                                <button className="btn btn-primary m-3" type="submit">Sign in</button>
+                                <button className="btn btn-primary m-3 w-100" type="submit">Sign in</button>
                             </form>
+
+                            <div><p>Don't have an account ?  <Link to="/registration">Sign up now</Link></p></div>
                         </div>
                     </div>
                 </div>

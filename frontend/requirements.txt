@@ -1,4 +1,0 @@
-react-router-dom
-formik
-bootstrap
-jwt-decode

@@ -8,9 +8,8 @@ export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
 
-    let [refreshToken, setRefreshToken] = useState(() => localStorage.getItem('refreshToken') ? JSON.parse(localStorage.getItem('refreshToken')) : null)
-    let [accessToken, setAccessToken] = useState(() => localStorage.getItem('accessToken') ? JSON.parse(localStorage.getItem('accessToken')) : null)
-    let [user, setUser] = useState(() => localStorage.getItem('accessToken') ? jwt_decode(localStorage.getItem('accessToken')) : null)
+    let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
+    let [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(JSON.parse(localStorage.getItem('authTokens')).access) : null)
     let [loading, setLoading] = useState(true)
 
     let navigate = useNavigate()
@@ -27,27 +26,22 @@ export const AuthProvider = ({ children }) => {
         let data = await response.json()
 
         if (response.status === 200) {
-            setRefreshToken(data.refresh)
-            setAccessToken(data.access)
+            setAuthTokens(data)
             let access = data.access
             if (access) {
                 setUser(jwt_decode(access))
-                localStorage.setItem('refreshToken', JSON.stringify(data.refresh))
-                localStorage.setItem('accessToken', JSON.stringify(data.access))
+                localStorage.setItem('authTokens', JSON.stringify(data))
                 navigate('/')
             } else { alert('Invalid Token') }
         } else {
             alert('Some error ocurred')
         }
-        //console.log('data after call', data)
     }
 
     let logoutUser = () => {
         setUser(null)
-        setRefreshToken(null)
-        setAccessToken(null)
-        localStorage.removeItem('refreshToken')
-        localStorage.removeItem('accessToken')
+        setAuthTokens(null)
+        localStorage.removeItem('authTokens')
         navigate('/login')
     }
 
@@ -58,15 +52,18 @@ export const AuthProvider = ({ children }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ 'refresh': refreshToken })
+                body: JSON.stringify({ 'refresh': authTokens.refresh })
             })
 
             let data = await response.json()
 
             if (response.status === 200) {
-                setAccessToken(data.access)
-                setUser(jwt_decode(data.access))
-                localStorage.setItem('accessToken', JSON.stringify(data.access))
+                try {
+                    setAuthTokens(data)
+                    setUser(jwt_decode(data.access))
+                    localStorage.setItem('authTokens', JSON.stringify(data))
+                } catch (error) { console.log('error', error) }
+
             } else {
                 console.log('error', response.status)
             }
@@ -77,23 +74,27 @@ export const AuthProvider = ({ children }) => {
             console.log('acces updated')
         } catch (error) {
             console.error('Error updating token: ', error)
-
         }
+
+
 
     }
 
     useEffect(() => {
+
         if (loading) {
             updateToken()
         }
 
-        const fourminutes = 1000 * 600 *4
+        const fourminutes = 1000 * 600 * 4
         let interval = setInterval(() => {
-            if (refreshToken) { updateToken() }
+            if (authTokens) { updateToken() }
         }, fourminutes);
 
         return () => clearInterval(interval)
-    }, [refreshToken, loading])
+
+
+    }, [authTokens, loading])
 
 
     let state = {

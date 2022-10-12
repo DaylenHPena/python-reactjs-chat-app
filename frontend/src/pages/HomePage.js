@@ -1,8 +1,8 @@
-import React, { Component, Fragment, useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import ChatList from '../components/chatList/ChatList'
 import ChatWindow from '../components/chatWindow/ChatWindow'
 import UserConf from '../components/UserConf'
-import { API_CHATS } from '../constants';
+import { API_CHATS, HTTP_HEADERS } from '../constants';
 import ConnectionContext from '../context/ConnectionContext';
 
 
@@ -14,19 +14,18 @@ function HomePage() {
 
   const getChats = async () => {
     let response = await fetch(API_CHATS, {
+      ...HTTP_HEADERS(),
       method: "GET",
-      headers: {
-        'Content-Type': 'application/json',
-      }
     })
 
     let data = await response.json()
 
-    if (data != chats) {
-      //console.log('getChats data', data)
+    if (response.status === 200) {
+      return data;
     }
-
-    return data;
+    else {
+      return { error: response.statusText }
+    }
   }
 
   useEffect(() => {
@@ -36,7 +35,10 @@ function HomePage() {
   useEffect(() => {
     async function fetchData() {
       let initial = await getChats()
-      setchats(initial)
+      if (initial.error) {
+        console.log('Unauthorized') //TODO:Handle error
+      }
+      else { setchats(initial) }
     }
     fetchData()
   }, [])
@@ -44,7 +46,7 @@ function HomePage() {
 
 
   return (
-    <Fragment>
+    <>
       <div className='row '>
         <div className='col-3 leftsidebar bg-light'>
           <UserConf></UserConf>
@@ -54,7 +56,7 @@ function HomePage() {
           <ChatWindow></ChatWindow>
         </div>
       </div>
-    </Fragment>
+    </>
   )
 }
 

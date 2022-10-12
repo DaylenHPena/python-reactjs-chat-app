@@ -96,4 +96,5 @@ class ChatConsumer(WebsocketConsumer):
             self.chat_room.users.add(get_user_model().objects.get(pk=receiver))
 
     def gen_personal_channel_name(self):
+        print('self.scope[user]',self.scope['user'])
         self.personal_channel = '{0}{1}'.format(PM_PREFIX, self.scope['user'].pk)

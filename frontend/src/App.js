@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import LoginPage from './pages/LoginPage';
+import RegistrationPage from './pages/RegistrationPage';
 import { BrowserRouter, createBrowserRouter, createRoutesFromElements, Route, Routes } from 'react-router-dom'
 import PrivateRoute from './utils/PrivateRoute';
 import { AuthProvider } from './context/AuthContext';
@@ -15,12 +16,11 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <AuthProvider>
-          <Header />
-          <ConnectionProvider>
-          <PrivateRoute exact path="/" element={<HomePage />} ></PrivateRoute>
-          </ConnectionProvider>
           <Routes>
+            <Route exact path="/" element={
+              <><ConnectionProvider><PrivateRoute />{<HomePage />}</ConnectionProvider></>} ></Route>
             <Route path="/login" element={<LoginPage />} ></Route>
+            <Route path="/registration" element={<RegistrationPage />} ></Route>
           </Routes>
         </AuthProvider>
       </BrowserRouter>

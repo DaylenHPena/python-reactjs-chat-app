@@ -5,5 +5,4 @@ from .views import RegistrationFormView
 urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('register', RegistrationFormView.as_view(), name='register'),
-
 ]

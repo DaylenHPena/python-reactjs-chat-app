@@ -9,6 +9,9 @@ export const ConnectionProvider = ({ children }) => {
     const url = 'ws://127.0.0.1:8000/ws/chat/ghello/';
     const chatSocket = new WebSocket(url);
 
+    console.log('chatSocket',chatSocket
+        )
+
     let onOpen = () => {
         chatSocket.onopen = () => {
             console.log('WebSocket Client Connected');

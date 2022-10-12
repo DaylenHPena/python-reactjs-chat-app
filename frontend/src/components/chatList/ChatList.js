@@ -2,7 +2,6 @@ import React, { Fragment, Component } from 'react'
 import ChatThumbnail from './ChatThumbnail'
 
 function ChatList(props) {
-    console.log('props.chats', props.chats)
     return (
         <>
             <ul className='list-group'>
