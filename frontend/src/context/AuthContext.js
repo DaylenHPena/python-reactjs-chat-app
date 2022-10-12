@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }) => {
             }
             console.log('acces updated')
         } catch (error) {
-            console.error('Error updating token: ', error)
+            console.error('Error updating token: ')
         }
 
 
