@@ -7,9 +7,11 @@ function MessageList() {
   const [messages, setMessages] = useState([])
 
   useEffect(() => {
-    client.onmessage = (message) => {
-      if (message != null) {
-        setMessages([...messages, JSON.parse(message.data)])
+    if (client) {
+      client.onmessage = (message) => {
+        if (message != null) {
+          setMessages([...messages, JSON.parse(message.data)])
+        }
       }
     }
   })
