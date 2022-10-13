@@ -8,9 +8,10 @@ import ConnectionContext from '../context/ConnectionContext';
 
 
 function HomePage() {
-  let { onOpen } = useContext(ConnectionContext)
+  let { client, setUrl, onOpen } = useContext(ConnectionContext)
 
   const [chats, setchats] = useState([])
+  const [chatId, setchatId] = useState('ghello')
 
   const getChats = async () => {
     let response = await fetch(API_CHATS, {
@@ -33,6 +34,7 @@ function HomePage() {
   })
 
   useEffect(() => {
+    setUrl(chatId)
     async function fetchData() {
       let initial = await getChats()
       if (initial.error) {

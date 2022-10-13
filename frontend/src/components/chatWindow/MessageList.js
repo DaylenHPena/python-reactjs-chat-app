@@ -7,6 +7,7 @@ function MessageList() {
   const [messages, setMessages] = useState([])
 
   useEffect(() => {
+    //always check for messages
     if (client) {
       client.onmessage = (message) => {
         if (message != null) {
@@ -16,11 +17,15 @@ function MessageList() {
     }
   })
 
+  useEffect(() => {
+    setMessages([])
+  }, [client])
+
   return (
     <Fragment>
       <div id='chat-log'>
         <ul className='list-group'>
-          {messages.map(message => {
+          {messages && messages.map(message => {
             return (<li key={message.pk} className="message-row"><Message {...message}></Message></li>)
           })}
         </ul>
