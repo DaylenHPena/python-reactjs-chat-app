@@ -12,14 +12,31 @@ class MessageSerializer(serializers.ModelSerializer):
 
 class ChatRoomSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
+    identifier = serializers.SerializerMethodField()
 
     class Meta:
         model = ChatRoom
-        fields = ('pk', 'name', 'users', 'room_type')
+        fields = ('pk', 'identifier','name', 'users', 'room_type')
 
     def get_name(self, obj):
         if obj.room_type != 1:
             return obj.name
-        user=CurrentUserDefault()
-        print('CurrentUserDefault',user,type(user),self.context['request'].user)
-        return 'Private'
+        # if private return name of the other user
+        user = self.context['request'].user
+        try:
+            receiver = obj.users.exclude(pk=user.pk)[0]
+            return receiver.username
+        except:
+            return 'Unknow'
+
+    def get_identifier(self, obj):
+        # if group -> -pk
+        # if private ->the other user pk
+        if obj.room_type != 1:
+            return '-{0}'.format(obj.pk)
+        user = self.context['request'].user
+        try:
+            receiver = obj.users.exclude(pk=user.pk)[0]
+            return receiver.pk
+        except:
+            return '0'

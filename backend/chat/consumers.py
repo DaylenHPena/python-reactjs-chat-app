@@ -1,30 +1,59 @@
 import json
 from datetime import datetime
 
-import utils.shortcuts as utils
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-from django.contrib.auth import get_user_model
-
-from .models import ChatRoom, private_chat_room_name_gen, get_room_type, GROUP, PM_PREFIX
 
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
-        self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = 'chat_%s' % self.room_name
-
-        self.gen_personal_channel_name()
+        #TODO: make this connects only once and change receiver channel instead of making a new connection
+        #print('This ChatConsumer channel_name automatic generated is ', self.channel_name)
+        self.get_personal_channel_name()
 
         self.listen_personal_channel()
 
-        self.connect_according_chat_type()
+        self.get_receiver_personal_channel_name()
 
-        # Join room group
-        async_to_sync(self.channel_layer.group_add)(
-            self.room_group_name,
-            self.channel_name
+        self.get_group_channels()
+
+    # send message to a group after typing it in the chat form
+    def receive(self, text_data=None, bytes_data=None):
+        text_data_json = json.loads(text_data)
+        text_data_json['date'] = datetime.now().isoformat()
+        text_data_json['type'] = 'chat_message'
+        text_data_json['sender'] = self.personal_channel
+        text_data_json['receiver'] = self.receiver_personal_channel
+
+        #print('Socket is receiving the message: {0} that was sent by {1} with personal channel {2} '.format(text_data_json['message'],self.scope['user'], self.personal_channel))
+
+        async_to_sync(self.channel_layer.group_send)(
+            self.receiver_personal_channel,
+            text_data_json
         )
+        async_to_sync(self.channel_layer.send)(
+            self.channel_name,
+            text_data_json
+        )
+
+    def disconnect(self, close_code):
+        pass
+
+    # Receive message from room group
+    def chat_message(self, event):
+        print('event', event)
+        message = event['message']
+        #print('chat_message is working now for message: {0} and {1} is receiving it'.format(message, self.scope['user']))
+
+        # Send message to WebSocket
+        self.send(text_data=json.dumps(event))
+
+    def get_personal_channel_name(self):
+        '''
+        Personal channel names are the user.pk, so they are unique
+        :return: void
+        '''
+        self.personal_channel = '{0}'.format(self.scope['user'].pk)
 
     def listen_personal_channel(self):
         # listen to own personal channel
@@ -34,67 +63,15 @@ class ChatConsumer(WebsocketConsumer):
         )
         self.accept()
         self.send(text_data=json.dumps({'type': 'connection on',
-                                        'message': '{0}: You are connected to {1}'.format(self.scope['user'],
-                                                                                          self.room_name)}))
+                                        'message': '{0}: You are connected to your personal channel {1}'.format(
+                                            self.scope['user'],
+                                            self.personal_channel)}))
 
-    # send message to a group after typing it in the chat form
-    def receive(self, text_data=None, bytes_data=None):
-        # text_data ={'message':'', 'user_id':'', 'room_name':''}
-        text_data_json = json.loads(text_data)
-        text_data_json['date'] = datetime.now().isoformat()
-        text_data_json['type'] = 'chat_message'
+    def get_receiver_personal_channel_name(self):
+        room_name = self.scope['url_route']['kwargs']['room_name']
+        self.receiver_personal_channel = room_name
+        #print('I am ready to send to {0}'.format(self.receiver_personal_channel))
 
-        print('receive is working now for message: {0} and {1} is receiving it'.format(text_data_json['message'],
-                                                                                       self.scope['user']))
-
-        async_to_sync(self.channel_layer.group_send)(
-            self.room_group_name,
-            text_data_json)
-
-    def disconnect(self, close_code):
+    def get_group_channels(self):
+        #TODO: start listening to user group channels
         pass
-
-    # Receive message from room group
-    def chat_message(self, event):
-        message = event['message']
-        # user_id = event['user_id']
-
-        print(
-            'chat_message is working now for message: {0} and {1} is receiving it'.format(message, self.scope['user']))
-
-        # Send message to WebSocket
-        self.send(text_data=json.dumps({
-            'message': message,
-            # 'user_id': user_id,
-            'date': datetime.now().isoformat()
-        }))
-
-    def connect_according_chat_type(self):
-        # get receiver from url and define if is a group or private room
-        receiver = self.scope['url_route']['kwargs']['room_name']
-        if get_room_type(receiver) == GROUP:
-            self.connect_to_group_chat(receiver)
-        else:
-            self.connect_to_private_chat(receiver)
-        print('My private room is {0} and I am ready to send to {1}'.format(self.personal_channel,
-                                                                            self.receiver_personal_channel))
-
-    def connect_to_group_chat(self, receiver):
-        self.receiver_personal_channel = receiver
-        chat_room_name = self.receiver_personal_channel
-        self.chat_room = utils.get_object_or_none(ChatRoom, name=chat_room_name)
-        # TODO manage error
-        if not self.chat_room: raise Exception('Chat room not found. Please, create first')
-
-    def connect_to_private_chat(self, receiver):
-        self.receiver_personal_channel = '{0}{1}'.format(PM_PREFIX, receiver)
-        chat_room_name = private_chat_room_name_gen(receiver, self.scope['user'].pk)
-        self.chat_room, created = ChatRoom.objects.get_or_create(channel_name=chat_room_name)
-        if created:
-            self.chat_room.users.add(self.scope['user'])
-            # TODO check if  receiver user exists
-            self.chat_room.users.add(get_user_model().objects.get(pk=receiver))
-
-    def gen_personal_channel_name(self):
-        print('self.scope[user]',self.scope['user'])
-        self.personal_channel = '{0}{1}'.format(PM_PREFIX, self.scope['user'].pk)

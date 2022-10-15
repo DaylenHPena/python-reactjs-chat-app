@@ -12,7 +12,7 @@ class ChatRoom(models.Model):
     ROOM_TYPE = ((PRIVATE, 'PRIVATE'),
                  (GROUP, 'GROUP'))
 
-    name = models.CharField(max_length=12, null=True)
+    name = models.CharField(max_length=12, null=True, blank=True)
     users = models.ManyToManyField(User)
     room_type = models.PositiveSmallIntegerField(choices=ROOM_TYPE, default=PRIVATE)
 
@@ -33,22 +33,8 @@ class Message(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     sender = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user().pk))
 
+    class Meta:
+        ordering = ('created_at',)
+
     def __str__(self):
         return self.text[0:10] if len(self.text) > 11 else self.text
-
-
-def private_chat_room_name_gen(user1_id, user2_id):
-    if int(user1_id) < int(user2_id):
-        return '{0}-{1}'.format(user1_id, user2_id)
-    return '{0}-{1}'.format(user2_id, user1_id)
-
-
-def get_channel_room_name(room_name):
-    if room_name.startswith('g'):
-        return room_name
-    return '{0}{1}'.format(PM_PREFIX, room_name)
-
-
-def get_room_type(room_name):
-    if room_name.startswith('g'): return GROUP
-    return PRIVATE

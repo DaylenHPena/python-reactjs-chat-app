@@ -3,9 +3,17 @@
   <component name="ChangeListManager">
     <list default="true" id="f45fe0c6-9e88-4b47-b91a-bf8cc9203e61" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/chat/api/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/chat/api/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/chat/consumers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/chat/consumers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/chat/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/chat/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/backend/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/UserConf.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/UserConf.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/chatList/ChatList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/chatList/ChatList.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/chatList/ChatThumbnail.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/chatList/ChatThumbnail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/chatWindow/MessageList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/chatWindow/MessageList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/chatWindow/ChatHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/chatWindow/ChatHeader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/chatWindow/ChatInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/chatWindow/ChatInput.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/chatWindow/Message.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/chatWindow/Message.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/context/AuthContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/context/AuthContext.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/context/ConnectionContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/context/ConnectionContext.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/HomePage.js" afterDir="false" />
     </list>
@@ -53,78 +61,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="asgi.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/core/asgi.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="24" column="20" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
-              <folding>
-                <element signature="e#220#229#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ajax_views_customs.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/utils/ajax_views_customs.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="e#0#72#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="message_mixin.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/utils/message_mixin.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="e#0#35#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="shortcuts.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/utils/shortcuts.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/core/settings.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="775">
-              <caret line="33" column="10" selection-start-line="33" selection-start-column="10" selection-end-line="33" selection-end-column="10" />
-              <folding>
-                <element signature="e#369#378#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JsonTokenAuthMiddleware.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/core/JsonTokenAuthMiddleware.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="consumers.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/chat/consumers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="11" column="36" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="36" />
+            <state relative-caret-position="150">
+              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -132,26 +73,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/backend/chat/urls.py">
+      <file leaf-file-name="serializers.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/backend/chat/api/serializers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="routing.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/chat/routing.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="296">
+              <caret line="34" selection-start-line="34" selection-end-line="34" />
             </state>
           </provider>
         </entry>
@@ -172,9 +98,10 @@
       <find>User</find>
       <find>backend</find>
       <find>channel_name</find>
-      <find>receiver</find>
       <find>to_representation</find>
       <find>context</find>
+      <find>chat_message</find>
+      <find>receiver</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\dayle\PycharmProjects\Chat\frontend</dir>
@@ -205,19 +132,19 @@
         <option value="$PROJECT_DIR$/backend/templates/base.html" />
         <option value="$PROJECT_DIR$/backend/templates/registration/login.html" />
         <option value="$PROJECT_DIR$/backend/chat/api/urls.py" />
-        <option value="$PROJECT_DIR$/backend/chat/models.py" />
-        <option value="$PROJECT_DIR$/backend/chat/api/serializers.py" />
         <option value="$PROJECT_DIR$/backend/users/api/serializers.py" />
         <option value="$PROJECT_DIR$/backend/users/urls.py" />
         <option value="$PROJECT_DIR$/backend/core/urls.py" />
         <option value="$PROJECT_DIR$/backend/users/api/views.py" />
         <option value="$PROJECT_DIR$/backend/users/api/urls.py" />
         <option value="$PROJECT_DIR$/backend/chat/views.py" />
-        <option value="$PROJECT_DIR$/backend/chat/consumers.py" />
         <option value="$PROJECT_DIR$/backend/chat/api/views.py" />
         <option value="$PROJECT_DIR$/backend/core/settings.py" />
         <option value="$PROJECT_DIR$/backend/core/asgi.py" />
         <option value="$PROJECT_DIR$/backend/core/JsonTokenAuthMiddleware.py" />
+        <option value="$PROJECT_DIR$/backend/chat/models.py" />
+        <option value="$PROJECT_DIR$/backend/chat/consumers.py" />
+        <option value="$PROJECT_DIR$/backend/chat/api/serializers.py" />
       </list>
     </option>
   </component>
@@ -263,7 +190,8 @@
               <item name="Chat" type="b2602c69:ProjectViewProjectNode" />
               <item name="Chat" type="462c0819:PsiDirectoryNode" />
               <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
+              <item name="chat" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -390,7 +318,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665611883001</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="frontend websocket connection context">
+      <created>1665669087342</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1665669087342</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView">
@@ -410,24 +345,24 @@
       <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
       <window_info active="true" anchor="bottom" id="Version Control" order="1" visible="true" weight="0.36887607" />
       <window_info anchor="bottom" id="Python Console" order="5" weight="0.57348704" />
-      <window_info anchor="bottom" id="Run" order="8" weight="0.20893371" />
-      <window_info anchor="bottom" id="Terminal" order="4" weight="0.26080692" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.7191781" visible="true" weight="0.18456376" />
+      <window_info anchor="bottom" id="Run" order="8" weight="0.5317003" />
+      <window_info anchor="bottom" id="Terminal" order="4" weight="0.29971182" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.77665704" visible="true" weight="0.18993288" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="1" weight="0.22214764" />
       <window_info anchor="right" id="SciView" order="0" />
-      <window_info id="Structure" order="2" sideWeight="0.28082192" side_tool="true" visible="true" weight="0.18456376" />
+      <window_info id="Structure" order="2" sideWeight="0.22334294" side_tool="true" weight="0.18456376" />
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="2" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
+      <window_info anchor="bottom" id="Messages" order="13" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="bottom" id="Database Console" order="13" weight="0.33429396" />
       <window_info anchor="bottom" id="Find" order="7" weight="0.3299712" />
-      <window_info anchor="bottom" id="Messages" order="13" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
@@ -493,7 +428,8 @@
     <MESSAGE value="frontend individual vars for refreshToken and accesToken fixed the refresh/page-reload problem" />
     <MESSAGE value="frontend ?" />
     <MESSAGE value="frontend creating websocket connection ..." />
-    <option name="LAST_COMMIT_MESSAGE" value="frontend creating websocket connection ..." />
+    <MESSAGE value="frontend websocket connection context" />
+    <option name="LAST_COMMIT_MESSAGE" value="frontend websocket connection context" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -501,10 +437,20 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/frontend/src/App.js">
+    <entry file="file://$PROJECT_DIR$/backend/chat/routing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="11" column="10" lean-forward="true" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
+        <state relative-caret-position="75">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/chat/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="575">
+          <caret line="25" column="25" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -649,13 +595,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/chat/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="16" column="79" selection-start-line="16" selection-start-column="79" selection-end-line="16" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/venv39/Lib/site-packages/rest_framework/routers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="223">
@@ -691,20 +630,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/chat/api/serializers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/chat/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/venv39/Lib/site-packages/rest_framework/generics.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="31">
@@ -730,13 +655,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="6" column="32" lean-forward="true" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/venv39/Lib/site-packages/channels/consumer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="40" column="13" selection-start-line="40" selection-start-column="13" selection-end-line="40" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -789,15 +707,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/utils/message_mixin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/utils/shortcuts.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -809,18 +718,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="775">
           <caret line="33" column="10" selection-start-line="33" selection-start-column="10" selection-end-line="33" selection-end-column="10" />
-          <folding>
-            <element signature="e#369#378#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/utils/ajax_views_customs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#72#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -828,29 +725,34 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
           <caret line="24" column="20" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
-          <folding>
-            <element signature="e#220#229#0" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/chat/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/core/JsonTokenAuthMiddleware.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="79">
+          <caret line="34" column="9" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/chat/consumers.py">
+    <entry file="file://$PROJECT_DIR$/backend/chat/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="11" column="36" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="175">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv39/Lib/site-packages/channels/consumer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="128" column="28" lean-forward="true" selection-start-line="128" selection-start-column="28" selection-end-line="128" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -864,13 +766,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/chat/urls.py">
+    <entry file="file://$PROJECT_DIR$/venv39/Lib/site-packages/django/core/management/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-15">
+          <caret line="539" column="5" lean-forward="true" selection-start-line="539" selection-start-column="5" selection-end-line="539" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/chat/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="696">
+          <caret line="36" column="33" selection-start-line="36" selection-start-column="33" selection-end-line="36" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/chat/consumers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
-          <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/chat/api/serializers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
         </state>
       </provider>
     </entry>

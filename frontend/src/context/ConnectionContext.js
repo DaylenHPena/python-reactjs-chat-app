@@ -9,23 +9,20 @@ export default ConnectionContext;
 export const ConnectionProvider = ({ children }) => {
 
     const { user } = useContext(AuthContext)
-    //console.log('localStorage.getItem(autTokens)', JSON.parse(localStorage.getItem('authTokens')).access)
 
     const [client, setClient] = useState(null)
-    const [url, setUrl] = useState(null)
+    const [url, setUrl] = useState('ghello')
 
     useEffect(() => {
-        console.log('My ConnectionContext can see the user updating')
         //TODO:Attempt to reconnect  or logout user
     }, [user])
 
     useEffect(() => {
-        console.log('My ConnectionContext client updated', client)
+        //TODO:
     }, [client])
 
     useEffect(() => {
         if (url) {
-            console.log('My url updated', client)
             connect(url);
         }
     }, [url])
@@ -34,6 +31,7 @@ export const ConnectionProvider = ({ children }) => {
         disconnect()
         let chatSocket = new WebSocket('ws://127.0.0.1:8000/ws/chat/' + url + '/?token=' + JSON.parse(localStorage.getItem('authTokens')).access)
         setClient(chatSocket)
+        setUrl(url)
         return chatSocket
     }
 
@@ -55,8 +53,8 @@ export const ConnectionProvider = ({ children }) => {
     let state = {
         'client': client,
         'onOpen': onOpen,
-        'setUrl': setUrl,
-        'connect':connect,
+        'connect': connect,
+        'url': url,
         'disconnect': disconnect
     }
 

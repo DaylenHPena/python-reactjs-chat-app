@@ -1,23 +1,24 @@
-import React, { Component, Fragment } from 'react'
+import React, { useContext } from 'react'
+import AuthContext from '../../context/AuthContext'
 
-export class Message extends Component {
+function Message(props) {
 
-    rowClass() {
+    const {user} = useContext(AuthContext)
+    const rowClass = () => {
         const row = 'message '
-        if (this.props.sender === '1') { return row + 'self-message' }
+        //TODO: fix messages not assigning right color
+        if (toString(props.sender).trim() == toString(user.user_id).trim()) { return row + 'self-message' }
         return row + 'others-message'
     }
 
-    render() {
-        return (
-            <Fragment> 
-                <div className={this.rowClass()}>
-                    <p className='mb-0'>{this.props.message}</p>
-                    <p className='time m-0'>{this.props.date}</p>
+    return (
+        <>
+            <div className={rowClass()}>
+                <p className='mb-0'>{props.message}</p>
+                <p className='time m-0'>{props.date}</p>
             </div>
-            </Fragment>
-        )
-    }
+        </>
+    )
 }
 
 export default Message

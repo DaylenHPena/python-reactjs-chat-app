@@ -1,20 +1,18 @@
-import React, { Component } from 'react'
+import React, { useContext } from 'react'
+import ConnectionContext from '../../context/ConnectionContext'
 
-export class ChatHeader extends Component {
-  render() {
-    return (
-      <div id="room-detail" className="bg-dark-style-header d-flex p-2 align-items-center text-white">
-        <img></img>
-        <p className="p-0">
-          Chat Room Details
-        </p>
-        <p>Last seen</p>
-        <a><span className='fa fa-times'></span></a>
-        <a><span className='fa fa-search'></span></a>
-        <a><span className='fa fa-dot'></span></a>
-      </div>
-    )
-  }
+function ChatHeader({ actualChat }) {
+  console.log('actualChat', actualChat)
+  return (
+    <div id="room-detail" className="bg-dark-style-header d-flex p-2 align-items-center text-white">
+      <div className="m-2"><img src="https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg" className=' rounded-circle avatar-xs' /></div>
+      <p className="p-0">
+        {actualChat && actualChat.name}
+      </p>
+      <a><span className='fa fa-search'></span></a>
+      <a><span className='fa fa-dot'></span></a>
+    </div>
+  )
 }
 
 export default ChatHeader

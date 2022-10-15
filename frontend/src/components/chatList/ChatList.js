@@ -4,11 +4,10 @@ import ChatThumbnail from './ChatThumbnail'
 function ChatList(props) {
     return (
         <>
-            <ul className='list-group'>
+            <ul className='list-group px-4'>
                 {props.chats && props.chats.map(chat => (
                     <>
-                        {console.log('chat', chat.pk)}
-                        <li key={chat.pk} id={chat.pk} ><ChatThumbnail chat={chat}></ChatThumbnail></li></>
+                        <li key={chat.identifier} id={chat.identifier} ><ChatThumbnail chat={chat}></ChatThumbnail></li></>
                 ))}
             </ul>
         </>

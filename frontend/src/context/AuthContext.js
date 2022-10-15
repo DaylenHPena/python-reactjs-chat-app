@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }) => {
             if (loading) {
                 setLoading(false)
             }
-            console.log('acces updated')
+            //console.log('acces updated')
         } catch (error) {
             console.error('Error updating token: ')
         }
