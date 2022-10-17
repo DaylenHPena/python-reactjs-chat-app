@@ -6,6 +6,7 @@ import { BrowserRouter, createBrowserRouter, createRoutesFromElements, Route, Ro
 import PrivateRoute from './utils/PrivateRoute';
 import { AuthProvider } from './context/AuthContext';
 import { ConnectionProvider } from './context/ConnectionContext';
+import { ChatProvider } from './context/ChatContext';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import 'bootstrap/dist/css/bootstrap.css'
@@ -16,12 +17,14 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <AuthProvider>
+          <ChatProvider>
           <Routes>
             <Route exact path="/" element={
               <><ConnectionProvider><PrivateRoute />{<HomePage />}</ConnectionProvider></>} ></Route>
             <Route path="/login" element={<LoginPage />} ></Route>
             <Route path="/registration" element={<RegistrationPage />} ></Route>
           </Routes>
+          </ChatProvider>
         </AuthProvider>
       </BrowserRouter>
     </div>

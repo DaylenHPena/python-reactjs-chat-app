@@ -28,10 +28,11 @@ class ChatRoom(models.Model):
 
 # provitional, this might become a text file for messages
 class Message(models.Model):
-    chat_room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
+    chat_room = models.ForeignKey(ChatRoom,related_name='messages' ,on_delete=models.CASCADE)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     sender = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user().pk))
+    #read_by = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user().pk))
 
     class Meta:
         ordering = ('created_at',)

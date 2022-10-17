@@ -2,24 +2,8 @@ import React, { Fragment, useContext, useEffect, useState } from 'react'
 import ConnectionContext from '../../context/ConnectionContext'
 import Message from '../chatWindow/Message'
 
-function MessageList() {
-  let { client } = useContext(ConnectionContext)
-  const [messages, setMessages] = useState([])
-
-  useEffect(() => {
-    //always check for messages
-    if (client) {
-      client.onmessage = (message) => {
-        if (message != null) {
-          setMessages([...messages, JSON.parse(message.data)])
-        }
-      }
-    }
-  })
-
-  useEffect(() => {
-    setMessages([])
-  }, [client])
+function MessageList({messages}) {
+  console.log('messages', messages)
 
   return (
     <Fragment>

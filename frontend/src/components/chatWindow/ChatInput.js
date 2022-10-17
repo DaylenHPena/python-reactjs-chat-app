@@ -1,21 +1,25 @@
 import React, { useContext } from 'react'
+import ChatContext from '../../context/ChatContext'
 import ConnectionContext from '../../context/ConnectionContext'
 
 function ChatInput() {
   const { client } = useContext(ConnectionContext)
+  let { actualChat } = useContext(ChatContext)
+
 
   let handleSubmit = (e) => {
     e.preventDefault();
     client.send(JSON.stringify({
-      'message': e.target.message.value,
+      'text': e.target.message.value,
+      'chat_room': actualChat.pk
     }));
     e.target.message.value = '';
   }
 
   return (
     <div className='position-relative'>
-      <form id="message-form" className="bg-light" onSubmit={handleSubmit}>
-        <input name="message" type="text" placeholder="Write a message..." className='form-control'></input>
+      <form id="message-form" className="border-top" onSubmit={handleSubmit}>
+        <input name="message" type="text" placeholder="Write a message..." className='form-control bg-light '></input>
         <button type='submit' className="btn btn-outline-secondary"><i
           className="fa fa-paper-plane"></i></button>
       </form>

@@ -14,7 +14,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class MyTokenObtainPairView(TokenObtainPairView):
     '''
-    Overwriting the obtain acces and refresh token default view
+    Overwriting the obtain access and refresh token default view
     to use MyTokenObtainPairSerializer
     '''
     serializer_class = MyTokenObtainPairSerializer

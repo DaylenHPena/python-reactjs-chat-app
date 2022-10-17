@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from rest_framework.fields import CurrentUserDefault
 
 from ..models import ChatRoom, Message
 
@@ -13,10 +12,11 @@ class MessageSerializer(serializers.ModelSerializer):
 class ChatRoomSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
     identifier = serializers.SerializerMethodField()
+    messages = MessageSerializer(many=True)
 
     class Meta:
         model = ChatRoom
-        fields = ('pk', 'identifier','name', 'users', 'room_type')
+        fields = ('pk', 'identifier', 'name', 'users', 'room_type', 'messages')
 
     def get_name(self, obj):
         if obj.room_type != 1:
@@ -30,10 +30,10 @@ class ChatRoomSerializer(serializers.ModelSerializer):
             return 'Unknow'
 
     def get_identifier(self, obj):
-        # if group -> -pk
+        # if group -> gpk
         # if private ->the other user pk
         if obj.room_type != 1:
-            return '-{0}'.format(obj.pk)
+            return 'g{0}'.format(obj.pk)
         user = self.context['request'].user
         try:
             receiver = obj.users.exclude(pk=user.pk)[0]
