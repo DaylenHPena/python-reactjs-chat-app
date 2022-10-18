@@ -18,7 +18,9 @@ function LoginPage() {
     })
 
     return (
+
         <div className="container bg-light">
+
             <div className="justify-content-center row">
                 <div className="col-md-8 col-lg-6 col-xl-5">
                     <div className="text-center mb-4">

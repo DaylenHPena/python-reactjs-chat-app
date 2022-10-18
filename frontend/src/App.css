@@ -1,6 +1,6 @@
 :root {
   --bg-dark: #e6ebf5;
-  --bg-sidebar: #f5f7fb;
+  --bg-left: #f5f7fb;
   --navbar-height: 60px;
   --border: #f0eff5;
   --input-background: rgb(228, 233, 239);
@@ -19,7 +19,6 @@ html {
 /* LEFT PANEL*/
 #leftsidebar {
   height: calc(100vh - 14px);
-  background-color: var(--bg-sidebar);
   box-shadow: 0 2px 4px rgb(15 34 58 / 12%);
 }
 
@@ -50,7 +49,10 @@ html {
 
 .bg-dark-style-header {
   background-color: #203E3E;
+}
 
+.bg-sidebar {
+  background-color: var(--bg-left)
 }
 
 /* MESSAGE */
@@ -121,6 +123,10 @@ html {
   width: 2.2rem;
 }
 
+.avatar-md {
+  width: 90%;
+}
+
 /* FONT */
 .fs-small {
   font-size: 0.9rem
@@ -142,22 +148,19 @@ html {
   color: #7a7f9a;
 }
 
-
-#user-nav-info,
-#room-detail {
+.top-nav {
   height: var(--navbar-height);
-
 }
 
-#user-nav-info {
+.top-nav.bg-dark-nav {
   background-color: var(--bg-dark);
   color: black;
 }
 
+
 .mw-75 {
   max-width: 75px;
 }
-
 
 .form-control:focus {
   box-shadow: none !important;
@@ -178,6 +181,10 @@ input.form-control {
   border-color: transparent !important;
 }
 
-#profile{
-  height: 100vh;
+#leftsidebar,#profile{
+  width:20%;
+}
+
+#main{
+  width:80%;
 }

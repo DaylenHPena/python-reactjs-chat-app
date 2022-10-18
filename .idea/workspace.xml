@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f45fe0c6-9e88-4b47-b91a-bf8cc9203e61" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/commands.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/context/ChatContext.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/RegistrationPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/chat/api/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/chat/api/serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/chatList/ChatList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/chatList/ChatList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/chatList/ChatThumbnail.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/chatList/ChatThumbnail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/chatWindow/Message.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/chatWindow/Message.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/chatWindow/MessageList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/chatWindow/MessageList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/UserConf.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/UserConf.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/chatWindow/ChatHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/chatWindow/ChatHeader.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/HomePage.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -57,7 +50,17 @@
     <option name="myModuleName" value="Chat" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="users_user" pinned="false" current-in-tab="true">
+        <entry file="das://05b7d1ef-82f7-4560-871c-d3ac73bfeec7/schema/main/table/users_user">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -136,7 +139,7 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/frontend/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="950" />
     <option name="width" value="980" />
     <option name="height" value="1030" />
@@ -319,15 +322,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="830" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="12" weight="0.3299712" />
       <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="1" weight="0.40489915" />
       <window_info anchor="bottom" id="Python Console" order="5" weight="0.57348704" />
-      <window_info anchor="bottom" id="Run" order="8" visible="true" weight="0.34005764" />
+      <window_info anchor="bottom" id="Run" order="8" weight="0.34005764" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.2146974" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.77665704" visible="true" weight="0.19798657" />
+      <window_info active="true" anchor="bottom" id="Database Console" order="13" visible="true" weight="0.33429396" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.77665704" visible="true" weight="0.19798657" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="1" weight="0.22214764" />
       <window_info anchor="right" id="SciView" order="0" weight="0.3295302" />
@@ -341,7 +346,6 @@
       <window_info anchor="bottom" id="Messages" order="13" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
-      <window_info anchor="bottom" id="Database Console" order="13" weight="0.33429396" />
       <window_info anchor="bottom" id="Find" order="7" weight="0.3299712" />
     </layout>
     <layout-to-restore>
@@ -780,6 +784,13 @@
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://05b7d1ef-82f7-4560-871c-d3ac73bfeec7/schema/main/table/users_user">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>

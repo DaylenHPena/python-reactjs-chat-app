@@ -6,7 +6,7 @@ function ChatHeader() {
   let { actualChat } = useContext(ChatContext)
 
   return (
-    <div id="room-detail" className="d-flex p-2 align-items-center border-bottom">
+    <div id="room-detail" className="d-flex p-2 align-items-center border-bottom top-nav">
       <div className='col-8 d-flex align-items-center'>
         <div className="m-2"><img src="https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg" className=' rounded-circle avatar-xs' /></div>
         <p className="p-0 text-truncate fs-4">

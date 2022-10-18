@@ -94,8 +94,27 @@ function HomePage() {
     )
   }
 
-  const searchChat = (string) => {
+  function ProfileSidebar() {
+    return (
+      <div id="profile" className="offcanvas offcanvas-start p-0 border-end border-opacity-50 pe-0 bg-sidebar">
+        <div className="d-flex px-4 align-items-center top-nav bg-dark-nav">
+          <span className='fa fa-arrow-left me-2' onClick={toogleMenu}></span>Profile
+        </div>
+        <div>
+          <div className="m-2 mb-4"><img src="https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0OhzF3FawUfrtONzz8nq3e.jpg" className=' rounded-circle avatar-md' /></div>
+          <h5>Username</h5>
+          <p>About</p>
+        </div>
+      </div>)
+  }
 
+  const searchChat = (string) => {
+  }
+
+  function toogleMenu() {
+    //TODO: move outside
+    var e = document.getElementById('profile')
+    e.classList.toggle("show");
   }
 
   function Search() {
@@ -103,8 +122,8 @@ function HomePage() {
     return (
       <div className='px-2 mt-2'>
         <form>
-          <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1"><span className='fa fa-search'></span></span>
+          <div className="input-group mb-3">
+            <span className="input-group-text" id="basic-addon1"><span className='fa fa-search'></span></span>
             <input id='search' name='search' type="text" className="form-control" placeholder="Search" aria-label="Username" aria-describedby="basic-addon1" />
           </div>
         </form>
@@ -112,17 +131,23 @@ function HomePage() {
     )
   }
 
+
   return (
     <>
       <div className='row '>
-        <div id="leftsidebar" className='col-3 border-end border-opacity-50 pe-0'>
+
+        <ProfileSidebar />
+
+        <div id="leftsidebar" className=' border-end border-opacity-50 pe-0 bg-sidebar'>
           <UserConf />
           <Search />
           <ChatList chats={chats} />
         </div>
-        <div className='col-9 p-0'>
+
+        <div className='p-0' id="main">
           {actualChat ? chatWindow() : <><h3>Start chatting with friends</h3></>}
         </div>
+
       </div>
     </>
   )
