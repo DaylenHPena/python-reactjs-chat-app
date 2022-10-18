@@ -10,7 +10,7 @@ function MessageList({messages}) {
       <div id='chat-log'>
         <ul className='list-group'>
           {messages && messages.map(message => {
-            return (<li key={message.pk} className="message-row"><Message {...message}></Message></li>)
+            return (<li key={message.sender+message.created_at} className="message-row"><Message {...message}></Message></li>)
           })}
         </ul>
       </div>

@@ -2,25 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f45fe0c6-9e88-4b47-b91a-bf8cc9203e61" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/Procfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/core/JsonTokenAuthMiddleware.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/runtime.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/commands.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/context/ChatContext.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/RegistrationPage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/chat/api/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/chat/api/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/chat/consumers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/chat/consumers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/chat/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/chat/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/backend/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/users/api/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/users/api/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/users/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/users/api/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/utils/ajax_views_customs.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/utils/message_mixin.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/UserConf.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/UserConf.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/chatList/ChatList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/chatList/ChatList.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/chatList/ChatThumbnail.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/chatList/ChatThumbnail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/chatWindow/ChatHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/chatWindow/ChatHeader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/chatWindow/ChatInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/chatWindow/ChatInput.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/chatWindow/Message.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/chatWindow/Message.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/chatWindow/MessageList.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/chatWindow/MessageList.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/HomePage.js" afterDir="false" />
@@ -129,12 +118,12 @@
         <option value="$PROJECT_DIR$/backend/core/JsonTokenAuthMiddleware.py" />
         <option value="$PROJECT_DIR$/backend/chat/models.py" />
         <option value="$PROJECT_DIR$/backend/chat/routing.py" />
-        <option value="$PROJECT_DIR$/backend/chat/api/serializers.py" />
         <option value="$PROJECT_DIR$/backend/chat/consumers.py" />
         <option value="$PROJECT_DIR$/backend/Procfile" />
         <option value="$PROJECT_DIR$/backend/runtime.txt" />
         <option value="$PROJECT_DIR$/backend/users/api/serializers.py" />
         <option value="$PROJECT_DIR$/backend/users/api/views.py" />
+        <option value="$PROJECT_DIR$/backend/chat/api/serializers.py" />
       </list>
     </option>
   </component>
@@ -147,7 +136,7 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/frontend/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="950" />
     <option name="width" value="980" />
     <option name="height" value="1030" />
@@ -171,12 +160,6 @@
               <item name="Chat" type="462c0819:PsiDirectoryNode" />
               <item name="backend" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Chat" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Chat" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="chat" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -187,7 +170,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="full.screen.before.presentation.mode" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/backend/db.sqlite3" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../budgetProject" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.django.DjangoModulesConfigurable" />
@@ -315,7 +298,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665841748042</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="frontend messages control 2">
+      <created>1666016118079</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1666016118079</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TodoView">
@@ -328,16 +318,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="830" extended-state="7" />
+    <frame x="-7" y="-7" width="1550" height="830" extended-state="6" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="12" weight="0.3299712" />
       <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="1" weight="0.36887607" />
+      <window_info anchor="bottom" id="Version Control" order="1" weight="0.40489915" />
       <window_info anchor="bottom" id="Python Console" order="5" weight="0.57348704" />
-      <window_info active="true" anchor="bottom" id="Run" order="8" visible="true" weight="0.33429396" />
+      <window_info anchor="bottom" id="Run" order="8" visible="true" weight="0.34005764" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.2146974" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.77665704" visible="true" weight="0.19261745" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.77665704" visible="true" weight="0.19798657" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="1" weight="0.22214764" />
       <window_info anchor="right" id="SciView" order="0" weight="0.3295302" />
@@ -420,7 +410,8 @@
     <MESSAGE value="frontend creating websocket connection ..." />
     <MESSAGE value="frontend websocket connection context" />
     <MESSAGE value="frontend messages control" />
-    <option name="LAST_COMMIT_MESSAGE" value="frontend messages control" />
+    <MESSAGE value="frontend messages control 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="frontend messages control 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -428,6 +419,26 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/backend/chat/api/serializers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="21" column="30" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/chat/api/serializers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="21" column="30" lean-forward="true" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/backend/templates/includes/_form_field_render.html">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -683,24 +694,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/utils/ajax_views_customs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3">
-          <folding>
-            <element signature="e#0#72#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/utils/message_mixin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-278">
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/utils/ajax_views_customs.py" />
+    <entry file="file://$PROJECT_DIR$/backend/utils/message_mixin.py" />
     <entry file="file://$PROJECT_DIR$/backend/utils/shortcuts.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -714,9 +709,6 @@
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/users/apps.py">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/users/tests.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -750,9 +742,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="800">
           <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -774,32 +763,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2200">
           <caret line="88" selection-start-line="87" selection-end-line="88" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/chat/apps.py">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/chat/routing.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="4" column="25" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/chat/tests.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/chat/api/serializers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="14" column="22" lean-forward="true" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+        <state relative-caret-position="375">
+          <caret line="21" column="27" lean-forward="true" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>

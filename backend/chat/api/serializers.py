@@ -12,11 +12,11 @@ class MessageSerializer(serializers.ModelSerializer):
 class ChatRoomSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
     identifier = serializers.SerializerMethodField()
-    messages = MessageSerializer(many=True)
 
     class Meta:
         model = ChatRoom
         fields = ('pk', 'identifier', 'name', 'users', 'room_type', 'messages')
+        depth=1
 
     def get_name(self, obj):
         if obj.room_type != 1:

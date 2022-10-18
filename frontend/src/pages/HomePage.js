@@ -6,7 +6,6 @@ import MessageList from '../components/chatWindow/MessageList';
 import UserConf from '../components/UserConf'
 import { API_CHATS, HTTP_HEADERS } from '../constants';
 import ConnectionContext from '../context/ConnectionContext';
-import AuthContext from '../context/AuthContext';
 import ChatContext from '../context/ChatContext';
 
 
@@ -52,20 +51,38 @@ function HomePage() {
     onOpen()
     if (client) {
       client.onmessage = ((message) => {
-        const data=JSON.parse(message.data)
+        const data = JSON.parse(message.data)
+        if (data.type === "chat_message") {
+          for (const chat in chats) {
+            if (chats[chat].pk === data.chat_room) {
+              chats[chat]['messages'] = [...chats[chat]['messages'], data]
+              if (chats[chat]['pk'] !== actualChat.pk) {
+                if (Object.hasOwnProperty.call(chats[chat], 'unread')) {
+                  console.log('hasOwnProperty.call(chats[chat]) ')
+                  chats[chat]['unread'] = chats[chat]['unread'] + 1
+                } else {
+                  chats[chat]['unread'] = 1
+                  console.log('le anado la propiedad')
+                }
+              }
+              updateChats([...chats])
+              console.log('chats', chats)
+              break;
+            }
+          }
+        }
         console.log('message', data)
         console.log('message.chat_room', data.chat_room)
         console.log('chats', chats)
-        for (const chat in chats) {
-          console.log('chat.pk', chats[chat])
-          if (chats[chat].pk === data.chat_room) {
-            console.log('first', { ...chats[chat]['messages'], data })
-          }
 
-        }
       })
     }
   })
+
+  useEffect(() => {
+    console.log('si vi que se actualizo')
+  }, [actualChat])
+
 
   const chatWindow = () => {
     return (
@@ -77,14 +94,33 @@ function HomePage() {
     )
   }
 
+  const searchChat = (string) => {
+
+  }
+
+  function Search() {
+    //TODO: Search in chat list
+    return (
+      <div className='px-2 mt-2'>
+        <form>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1"><span className='fa fa-search'></span></span>
+            <input id='search' name='search' type="text" className="form-control" placeholder="Search" aria-label="Username" aria-describedby="basic-addon1" />
+          </div>
+        </form>
+      </div>
+    )
+  }
+
   return (
     <>
       <div className='row '>
-        <div id="leftsidebar" className='col-3 p-0 border-end border-opacity-50'>
+        <div id="leftsidebar" className='col-3 border-end border-opacity-50 pe-0'>
           <UserConf />
+          <Search />
           <ChatList chats={chats} />
         </div>
-        <div className='col p-0'>
+        <div className='col-9 p-0'>
           {actualChat ? chatWindow() : <><h3>Start chatting with friends</h3></>}
         </div>
       </div>
