@@ -1,11 +1,11 @@
 import React from 'react'
 import ChatThumbnail from './ChatThumbnail'
 
-function ChatList(props) {
+function ChatList({chats}) {
     return (
         <>
             <ul className='list-unstyled mt-2'>
-                {props.chats && props.chats.map(chat => (
+                {chats && chats.map(chat => (
                     <>
                         <li key={chat.identifier} id={chat.identifier} ><ChatThumbnail chat={chat}></ChatThumbnail></li></>
                 ))}

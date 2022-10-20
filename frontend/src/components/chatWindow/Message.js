@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 import AuthContext from '../../context/AuthContext'
 
-function Message(props) {
+function Message({message}) {
     const { user } = useContext(AuthContext)
 
     const rowClass = () => {
         const row = 'text-wrap message '
-        if (String(props.sender) === String(user.user_id)) { return row + 'self-message' }
+        if (String(message.sender) === String(user.user_id)) { return row + 'self-message' }
         return row + 'others-message'
     }
 
@@ -15,7 +15,7 @@ function Message(props) {
     return (
         <>
             <div className={rowClass()}>
-                <p className='mb-0 '>{props.text} <span className='time mb-0'>{time(props.created_at)}</span></p>
+                <p className='mb-0 '>{message.text} <span className='time mb-0'>{time(message.created_at)}</span></p>
 
             </div>
         </>

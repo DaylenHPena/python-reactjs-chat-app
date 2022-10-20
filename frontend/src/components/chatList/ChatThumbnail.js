@@ -5,7 +5,7 @@ import ConnectionContext from '../../context/ConnectionContext'
 function ChatThumbnail(props) {
     const { chat } = props;
     const { connect } = useContext(ConnectionContext)
-    let { updateActualChat, markRead } = useContext(ChatContext)
+    let { updateActualChat } = useContext(ChatContext)
 
     const badgeCount = () => {
         if (Object.hasOwnProperty.call(chat, 'unread') & chat.unread !== 0) {
@@ -16,7 +16,6 @@ function ChatThumbnail(props) {
 
     const handleClick = (e) => {
         connect(chat.identifier)
-        markRead(chat)
         updateActualChat(chat)
     }
 

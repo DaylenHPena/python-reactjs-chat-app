@@ -16,7 +16,7 @@ class ChatRoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChatRoom
         fields = ('pk', 'identifier', 'name', 'users', 'room_type', 'messages')
-        #depth=1
+        depth=1
 
     def get_name(self, obj):
         if obj.room_type != 1:

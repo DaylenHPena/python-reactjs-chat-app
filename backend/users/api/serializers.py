@@ -9,10 +9,21 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = "__all__"
 
+
 class ContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('pk','username','avatar')
+        fields = ('pk', 'username', 'avatar')
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        try:
+            contact = self.context['request'].user.contact.get(pk=instance.pk)
+            ret['is_contact'] = True
+        except:
+            ret['is_contact'] = False
+        return ret
+
 
 class RegisterUserSerializer(serializers.ModelSerializer):
     class Meta:
