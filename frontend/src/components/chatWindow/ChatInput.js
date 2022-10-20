@@ -11,7 +11,8 @@ function ChatInput() {
     e.preventDefault();
     client.send(JSON.stringify({
       'text': e.target.message.value,
-      'chat_room': actualChat.pk
+      'chat_room': actualChat.pk,
+      'type': 'chat_message',
     }));
     e.target.message.value = '';
   }

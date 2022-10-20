@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 
 
 def get_sentinel_user():
@@ -11,4 +12,5 @@ def get_sentinel_user():
 
 
 class User(AbstractUser):
-    pass
+    contact = models.ManyToManyField('User')
+    avatar = models.ImageField(upload_to='images/', null=True, blank=True, default='logo.svg')

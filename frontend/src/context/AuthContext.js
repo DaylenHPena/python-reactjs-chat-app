@@ -33,8 +33,8 @@ export const AuthProvider = ({ children }) => {
                 localStorage.setItem('authTokens', JSON.stringify(data))
                 navigate('/')
             } else { alert('Invalid Token') }
-        } else {
-            alert('Some error ocurred')
+        }else {
+            return response.status
         }
     }
 
@@ -46,38 +46,37 @@ export const AuthProvider = ({ children }) => {
     }
 
     let updateToken = async () => {
-        try {
-            let response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ 'refresh': authTokens.refresh })
-            })
+        if (authTokens) {
+            try {
+                let response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 'refresh': authTokens.refresh })
+                })
 
-            let data = await response.json()
+                let data = await response.json()
 
-            if (response.status === 200) {
-                try {
-                    setAuthTokens(data)
-                    setUser(jwt_decode(data.access))
-                    localStorage.setItem('authTokens', JSON.stringify(data))
-                } catch (error) { console.log('error', error) }
+                if (response.status === 200) {
+                    try {
+                        setAuthTokens(data)
+                        setUser(jwt_decode(data.access))
+                        localStorage.setItem('authTokens', JSON.stringify(data))
+                    } catch (error) { console.log('error', error) }
 
-            } else {
-                console.log('error', response.status)
+                } else {
+                    console.log('error', response.status)
+                }
+
+                if (loading) {
+                    setLoading(false)
+                }
+                //console.log('acces updated')
+            } catch (error) {
+                console.error('Error updating token: ')
             }
-
-            if (loading) {
-                setLoading(false)
-            }
-            //console.log('acces updated')
-        } catch (error) {
-            console.error('Error updating token: ')
         }
-
-
-
     }
 
     useEffect(() => {
@@ -92,7 +91,6 @@ export const AuthProvider = ({ children }) => {
         }, fourminutes);
 
         return () => clearInterval(interval)
-
 
     }, [authTokens, loading])
 

@@ -1,7 +1,7 @@
 import './App.css';
 import LoginPage from './pages/LoginPage';
 import RegistrationPage from './pages/RegistrationPage';
-import { BrowserRouter,  Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import PrivateRoute from './utils/PrivateRoute';
 import { AuthProvider } from './context/AuthContext';
 import { ConnectionProvider } from './context/ConnectionContext';
@@ -16,12 +16,13 @@ function App() {
       <BrowserRouter>
         <AuthProvider>
           <ChatProvider>
-          <Routes>
-            <Route exact path="/" element={
-              <><ConnectionProvider><PrivateRoute />{<HomePage />}</ConnectionProvider></>} ></Route>
-            <Route path="/login" element={<LoginPage />} ></Route>
-            <Route path="/registration" element={<RegistrationPage />} ></Route>
-          </Routes>
+            <Routes>
+              <Route exact path="/" element={
+                <><ConnectionProvider><PrivateRoute />{<HomePage />}</ConnectionProvider></>} >
+              </Route>
+              <Route path="/login" element={<LoginPage />} ></Route>
+              <Route path="/registration" element={<RegistrationPage />} ></Route>
+            </Routes>
           </ChatProvider>
         </AuthProvider>
       </BrowserRouter>

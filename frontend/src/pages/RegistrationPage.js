@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { API_REGISTRATION, HTTP_HEADERS } from "../constants";
 
 function RegistrationPage() {
@@ -11,25 +11,26 @@ function RegistrationPage() {
             username: "",
             password: "",
             confirm_password: "",
-
         },
 
         onSubmit: async (values) => {
             console.log('submitting', values)
             let response = await fetch(API_REGISTRATION, {
-                ...HTTP_HEADERS,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 method: "POST",
                 body: JSON.stringify({ 'username': values.username, 'password': values.password })
             })
 
             let data = await response.json()
 
-            if (response.status === 200) {
+            if (response.status === 201) {
                 console.log(response.data)
                 navigate('/login')
             }
             else {
-                console.log('errors', response.errors)
+                console.log('errors', response.data)
             }
         },
         //TODO: validate fields
@@ -47,9 +48,7 @@ function RegistrationPage() {
             } if (values.password != "" && values.confirm_password != "" && values.confirm_password != values.password) {
                 errors.confirm_password = "Must be equal to your password"
             }
-            else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.password)) {
-                errors.email = 'Invalid email address';
-            }
+            //else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.password)) { errors.email = 'Invalid email address'; }
 
             console.log(errors)
             return errors;
@@ -58,7 +57,7 @@ function RegistrationPage() {
     })
 
     return (
-        <div className="container bg-light">
+        <div className="container bg-light vh-100 vw-100">
             <div className="justify-content-center row">
                 <div className="col-md-8 col-lg-6 col-xl-5">
                     <div className="text-center mb-4">
@@ -81,10 +80,14 @@ function RegistrationPage() {
                                             value={formik.values.username}
                                             onChange={formik.handleChange}
                                             aria-label="Username"
-                                            aria-describedby="basic-addon1">
+                                            aria-describedby="basic-addon1"
+                                            required
+                                        >
                                         </input>
                                         {formik.errors.name ? (
-                                            <p>{formik.errors.name}</p>
+                                            <div class="invalid-feedback">
+                                                <p>{formik.errors.name}</p>
+                                            </div>
                                         ) : null}
                                     </div>
                                 </div>
@@ -100,7 +103,8 @@ function RegistrationPage() {
                                             value={formik.values.password}
                                             onChange={formik.handleChange}
                                             aria-label="Username"
-                                            aria-describedby="basic-addon1">
+                                            aria-describedby="basic-addon1"
+                                            required>
                                         </input>
                                     </div>
                                 </div>
@@ -116,14 +120,17 @@ function RegistrationPage() {
                                             value={formik.values.confirm_password}
                                             onChange={formik.handleChange}
                                             aria-label="Username"
-                                            aria-describedby="basic-addon1">
+                                            aria-describedby="basic-addon1"
+                                            required>
                                         </input>
                                     </div>
                                 </div>
-                                <button className="btn btn-primary m-3 w-100" type="submit">Sign up</button>
+                                <button className="btn btn-primary w-100" type="submit">Sign up</button>
                             </form>
                         </div>
                     </div>
+                    <div><Link to='/login'>Sign in</Link></div>
+
                 </div>
             </div>
         </div>

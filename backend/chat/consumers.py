@@ -6,11 +6,23 @@ from channels.generic.websocket import WebsocketConsumer
 
 from .models import ChatRoom, Message
 
+CONNECTION_ON = 0
+CONNECTION_OFF = 1
+CHAT_MESSAGE = 2
+NEW_CHAT = 3
+
 
 class ChatConsumer(WebsocketConsumer):
+    '''
+    Types of message:
+    chat_message
+    '''
+
     def connect(self):
         # TODO: make this connects only once and change receiver channel instead of making a new connection
         # print('This ChatConsumer channel_name automatic generated is ', self.channel_name)
+        # TODO: check error
+        self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.get_personal_channel_name()
 
         self.listen_personal_channel()
@@ -23,7 +35,6 @@ class ChatConsumer(WebsocketConsumer):
     def receive(self, text_data=None, bytes_data=None):
         text_data_json = json.loads(text_data)
         text_data_json['created_at'] = datetime.now().isoformat()
-        text_data_json['type'] = 'chat_message'
         text_data_json['sender'] = self.personal_channel
 
         # print('Socket is receiving the message: {0} that was sent by {1} with personal channel {2} '.format(text_data_json['message'],self.scope['user'], self.personal_channel))
@@ -37,7 +48,7 @@ class ChatConsumer(WebsocketConsumer):
             text_data_json
         )
 
-        #self.save_db(text_data_json)
+        # self.save_db(text_data_json)
 
     def disconnect(self, close_code):
         pass
@@ -51,12 +62,16 @@ class ChatConsumer(WebsocketConsumer):
         # Send message to WebSocket
         self.send(text_data=json.dumps(event))
 
+    def new_chat(self, event):
+        self.send(text_data=json.dumps(event))
+
     def get_personal_channel_name(self):
         '''
         Personal channel names are the user.pk, so they are unique
         :return: void
         '''
         self.personal_channel = '{0}'.format(self.scope['user'].pk)
+        return self.personal_channel
 
     def listen_personal_channel(self):
         # listen to own personal channel
@@ -71,28 +86,45 @@ class ChatConsumer(WebsocketConsumer):
                                             self.personal_channel)}))
 
     def get_receiver_personal_channel_name(self):
-        room_name = self.scope['url_route']['kwargs']['room_name']
-        self.receiver_personal_channel = room_name
+        self.receiver_personal_channel = self.room_name
         # print('I am ready to send to {0}'.format(self.receiver_personal_channel))
+        return self.receiver_personal_channel
 
     def get_group_channels(self):
         # TODO: start listening to user group channels
         pass
 
     def get_room_type(self):
-        room = self.scope['url_route']['kwargs']['room_name']
-        if (room.startswith('g')): return 'group'
+        if (self.room_name.startswith('g')): return 'group'
         return 'private'
+
+    def get_chat_room(self):
+        if self.room_name:
+            try:
+                chat_room = ChatRoom.objects.filter(users__pk=int(self.get_personal_channel_name())).get(
+                    users__pk=int(self.get_receiver_personal_channel_name()))
+                return chat_room
+            except:return None
+        return None
 
     def save_db(self, text_data_json):
         print('get_room_type', self.get_room_type())
         print('chat_room', text_data_json['chat_room'])
-        chat_room = ChatRoom.objects.get(pk=int(text_data_json['chat_room']))
+        if self.get_room_type() == 'private':
+            chat_room = self.get_chat_room()
+            if not chat_room:
+                # TODO add type and users
+                chat_room = ChatRoom.objects.create()
+                chat_room.users.add(int(self.get_receiver_personal_channel_name()))
+                chat_room.users.add(int(self.get_personal_channel_name()))
+                chat_room.save()
+                self.receive({'type': 'new_chat', 'text': '{0} just started a new chat'.format(self.channel_name)})
+        else:
+            # TODO change to real way
+            chat_room = ChatRoom.objects.get(name=text_data_json['chat_room'][1:])
+
         message = Message(chat_room=chat_room,
                           text=text_data_json['text'],
                           sender=self.scope['user']
                           )
         message.save()
-
-    def get_chat_room(self):
-        return None

@@ -9,6 +9,10 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = "__all__"
 
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('pk','username','avatar')
 
 class RegisterUserSerializer(serializers.ModelSerializer):
     class Meta:

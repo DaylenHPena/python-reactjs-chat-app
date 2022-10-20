@@ -29,10 +29,12 @@ export const ConnectionProvider = ({ children }) => {
 
     const connect = (url) => {
         disconnect()
-        let chatSocket = new WebSocket('ws://127.0.0.1:8000/ws/chat/' + url + '/?token=' + JSON.parse(localStorage.getItem('authTokens')).access)
-        setClient(chatSocket)
-        setUrl(url)
-        return chatSocket
+        if (localStorage.getItem('authTokens')) {
+            let chatSocket = new WebSocket('ws://127.0.0.1:8000/ws/chat/' + url + '/?token=' + JSON.parse(localStorage.getItem('authTokens')).access)
+            setClient(chatSocket)
+            setUrl(url)
+            return chatSocket
+        }
     }
 
     const disconnect = () => {
