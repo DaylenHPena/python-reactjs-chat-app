@@ -13,4 +13,4 @@ def get_sentinel_user():
 
 class User(AbstractUser):
     contact = models.ManyToManyField('User')
-    avatar = models.ImageField(upload_to='images/', null=True, blank=True, default='logo.svg')
+    avatar = models.ImageField(upload_to='media/', null=True, blank=True, default='logo.svg')

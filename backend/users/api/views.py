@@ -1,12 +1,14 @@
 from django.contrib.auth import get_user_model
-from rest_framework import viewsets, views, status, generics, permissions
+from rest_framework import viewsets, views, status, generics
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.filters import SearchFilter
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from ..api.serializers import RegisterUserSerializer, MyTokenObtainPairSerializer, UserSerializer, ContactSerializer
+from ..api.serializers import RegisterUserSerializer, MyTokenObtainPairSerializer, UserSerializer, ContactSerializer, \
+    ChangeAvatarSerializer
 from ..models import User
 
 
@@ -38,6 +40,15 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
+class AvatarViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = ChangeAvatarSerializer
+    parser_classes = (MultiPartParser, FormParser)
+
+    def perform_create(self, serializer):
+        serializer.save(pk=self.request.user)
+
+
 class RegistrationView(views.APIView):
     permission_classes = [AllowAny]
 
@@ -48,6 +59,7 @@ class RegistrationView(views.APIView):
             if user:
                 return Response(status=status.HTTP_201_CREATED)
         return Response(reg_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(('GET',))
 @permission_classes([IsAuthenticated])

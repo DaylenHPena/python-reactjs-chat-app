@@ -2,10 +2,11 @@ from django.urls import path, include
 from rest_framework import routers
 
 from ..api.views import MyTokenObtainPairView, UserViewSet, RegistrationView, ContactsListView, UserSearchListView, \
-    add_contact
+    add_contact,AvatarViewSet
 
 router = routers.DefaultRouter()
 router.register('users', UserViewSet, basename='users')
+router.register('avatar', AvatarViewSet, basename='avatar')
 
 urlpatterns = [
     path('', include(router.urls)),

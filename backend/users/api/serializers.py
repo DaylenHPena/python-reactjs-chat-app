@@ -1,6 +1,8 @@
+from django.contrib.sites.models import Site
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+from core import settings
 from ..models import User
 
 
@@ -9,6 +11,10 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = "__all__"
 
+class ChangeAvatarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('pk','avatar')
 
 class ContactSerializer(serializers.ModelSerializer):
     class Meta:
@@ -44,4 +50,9 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
         token['username'] = user.username
+        print(Site.objects.get_current())
+        print(user.avatar.url,'user avatar url')
+        print(user.avatar.path)
+        print(settings.MEDIA_URL)
+        token['avatar'] = user.avatar.url
         return token

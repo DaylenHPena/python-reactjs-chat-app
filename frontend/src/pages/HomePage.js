@@ -4,10 +4,9 @@ import ChatHeader from '../components/chatWindow/ChatHeader';
 import ChatInput from '../components/chatWindow/ChatInput';
 import MessageList from '../components/chatWindow/MessageList';
 import UserConf from '../components/UserConf'
-import { API_ADD_CONTACT, API_CHATS, API_CONTACTS, API_SEARCH_CONTACT, HTTP_HEADERS } from '../constants';
+import { API_CHATS, API_CONTACTS,  HTTP_HEADERS } from '../constants';
 import ConnectionContext from '../context/ConnectionContext';
 import ChatContext from '../context/ChatContext';
-import ToogleOffCanvas from '../utils/ToogleOffCanvas';
 import ProfileSidebar from '../components/profile/ProfileSidebar';
 import ContactSidebar from '../components/contact/ContactSidebar';
 import AddContactSidebar from '../components/contact/AddContactSidebar';
