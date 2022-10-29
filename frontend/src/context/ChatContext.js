@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { API_CHATS, HTTP_HEADERS } from "../constants";
 
 const ChatContext = createContext()
 export default ChatContext
@@ -12,33 +13,58 @@ export const ChatProvider = ({ children }) => {
     const updateChats = (values) => {
         setchats(values)
         //update actualChat as well, cause it might have changed
-        for (const chat in chats) {
-            if (chats[chat]['pk'] === actualChat.pk) {
+        for (const key in chats) {
+            if (chats[key]['pk'] === actualChat.pk) {
                 console.log('es el mimso que el actual debe actualizar')
-                setActualChat(chats[chat])
+                setActualChat(chats[key])
                 break;
             }
         }
     }
 
+    const getChats = async () => {
+        let response = await fetch(API_CHATS, {
+            ...HTTP_HEADERS(),
+            method: "GET",
+        })
+
+        let data = await response.json()
+
+        if (response.status === 200) {
+            return data;
+        }
+        else {
+            return { error: response.statusText }
+        }
+    }
+
     const receiveMessage = (message) => {
+        //excepcts message to be {'type':'',....}
         const data = JSON.parse(message.data)
 
         if (data.type === "chat_message") {
-            for (const chat in chats) {
-                if (chats[chat].pk === data.chat_room) {
-                    chats[chat]['messages'] = [...chats[chat]['messages'], data]
-                    if (chats[chat]['pk'] !== actualChat.pk) {
-                        markUnread(chats[chat])
+            for (const key in chats) {
+                const _chat = chats[key]
+                if (_chat.pk === data.chat_room) {
+                    _chat['messages'] = [..._chat['messages'], data] //add new message
+                    if (_chat.pk !== actualChat.pk) {
+                        markUnread(_chat)
                     }
                     updateChats([...chats])
-                    break;
+                    return;
                 }
             }
         }
 
         else if (data.type === "new_chat") {
             console.log('need to update chats')
+            async function fetchData() {
+                const data = await getChats()
+                if (!data.error) {
+                    updateChats(data)
+                }
+            }
+            fetchData()
         }
     }
 
@@ -54,30 +80,37 @@ export const ChatProvider = ({ children }) => {
         } else {
             chat['unread'] = 1
         }
+        console.log('chat[unread]', chat['unread'])
     }
 
     const updateActualChat = (chat) => {
         markRead(chat)
         setActualChat(chat)
+        console.log('actualChat !== proxyChat', actualChat, proxyChat)
+        if (proxyChat && actualChat !== proxyChat) {
+            //clean  proxy chat
+            console.log('i clean proxy chat')
+            setProxyChat(null)
+        }
     }
 
     const connectWithUser = (user) => {
+        console.log('proxyChat', proxyChat)
         //try to get an existing chat 
-        console.log('I am looking for my friend')
         let exist = false
         for (const key in chats) {
-            if (Object.hasOwnProperty.call('identifier', chats['key']) && chats['key'].identifier === user.pk) {
-                updateActualChat(chats['key'])
+            if (('identifier' in chats[key]) && String(chats[key].identifier) === String(user.pk)) {
+                updateActualChat(chats[key])
                 exist = true
-                break;
+                return;
             }
         }
-        if (!exist) {
-            // send trough proxy chat if chat doesnt exist
-            const tempChat = createProxyChat(user.username)
-            setProxyChat(tempChat)
-            updateActualChat(tempChat)
-        }
+
+        // send trough proxy chat if chat doesnt exist
+        console.log('i am making a proxy')
+        const tempChat = createProxyChat(user.username)
+        setProxyChat(tempChat)
+        updateActualChat(tempChat)
     }
 
     const createProxyChat = (name) => ({ 'pk': 'proxy', 'identifier': 'proxy', 'name': name, })
@@ -85,6 +118,7 @@ export const ChatProvider = ({ children }) => {
     const state = {
         'chats': chats,
         'updateChats': updateChats,
+        'getChats': getChats,
         'markRead': markRead,
         'actualChat': actualChat,
         'updateActualChat': updateActualChat,

@@ -26,4 +26,4 @@ export const API_REGISTRATION = API_BASE + "auth/registration/";
 export const API_CONTACTS = API_BASE + "contacts/";
 export const API_SEARCH_CONTACT = API_BASE + "search-contact/?search=";
 export const API_ADD_CONTACT = API_BASE + "add_contact/";
-export const API_CHANGE_AVATAR = API_BASE + "avatar/";
+export const API_CHANGE_AVATAR = API_BASE + "update_avatar/";

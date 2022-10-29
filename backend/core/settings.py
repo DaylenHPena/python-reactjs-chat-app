@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 LOCAL_APPS = [
+    'api',
     "chat",
     'users',
     "utils"
@@ -39,7 +40,6 @@ THIRD_APPS = [
     "corsheaders",
     'rest_framework',
     'widget_tweaks',
-    'django.contrib.sites'
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -192,3 +192,6 @@ CHANNEL_LAYERS = {
         },
     },
 }
+HOST='http://127.0.0.1:8000'
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = None

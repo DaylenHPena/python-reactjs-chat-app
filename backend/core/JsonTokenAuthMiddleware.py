@@ -4,7 +4,7 @@ from channels.middleware import BaseMiddleware
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 
-from backend.core.settings import SECRET_KEY, SIMPLE_JWT
+from core.settings import SECRET_KEY, SIMPLE_JWT
 
 
 # https://gist.github.com/AliRn76/1fb99688315bedb2bf32fc4af0e50157#file-django_channels3_custom_auth_middleware-py

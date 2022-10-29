@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import ChatContext from '../../context/ChatContext';
-import ConnectionContext from '../../context/ConnectionContext'
+import ChatContext from '../../../context/ChatContext';
+import ConnectionContext from '../../../context/ConnectionContext'
 
-function ChatThumbnail(props) {
-    const { chat } = props;
+function ChatThumbnail({ chat }) {
+    const { name, identifier, img } = chat;
     const { connect } = useContext(ConnectionContext)
     let { updateActualChat } = useContext(ChatContext)
 
@@ -14,7 +14,7 @@ function ChatThumbnail(props) {
         return (null)
     }
 
-    const handleClick = (e) => {
+    const handleClick = () => {
         connect(chat.identifier)
         updateActualChat(chat)
     }
@@ -48,10 +48,10 @@ function ChatThumbnail(props) {
     return (
         <a onClick={handleClick}>
             <div className="d-flex px-2 py-3 mb-0 chat-room">
-                <div className="me-3"><img src="https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg" className=' rounded-circle avatar-xs' /></div>
+                <div className="me-3"><img src={img} className=' rounded-circle avatar-xs' /></div>
                 <div className='flex-grow-1'>
-                    <div key={chat.identifier} className='m-0 text-start mw-75'>
-                        <p className='fw-semibold m-0 text-truncate'>{chat.name}</p>
+                    <div key={identifier} className='m-0 text-start mw-75'>
+                        <p className='fw-semibold m-0 text-truncate'>{name}</p>
                         <p className='last-message m-0 gray text-truncate'>{lastMessage()}</p>
                     </div>
                 </div>

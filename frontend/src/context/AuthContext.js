@@ -1,6 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import jwt_decode from 'jwt-decode'
-import { redirect, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+
+import axios from 'axios'
 
 const AuthContext = createContext();
 export default AuthContext;
@@ -10,11 +12,18 @@ export const AuthProvider = ({ children }) => {
 
     let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
     let [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(JSON.parse(localStorage.getItem('authTokens')).access) : null)
+
     let [loading, setLoading] = useState(true)
 
     let navigate = useNavigate()
 
     let loginUser = async (values) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }
+        axios.post('http://localhost:8000/api/token/', JSON.stringify(values), config).fetch().catch()
         let response = await fetch('http://localhost:8000/api/token/', {
             method: "POST",
             headers: {
@@ -33,7 +42,7 @@ export const AuthProvider = ({ children }) => {
                 localStorage.setItem('authTokens', JSON.stringify(data))
                 navigate('/')
             } else { alert('Invalid Token') }
-        }else {
+        } else {
             return response.status
         }
     }
@@ -62,6 +71,7 @@ export const AuthProvider = ({ children }) => {
                     try {
                         setAuthTokens(data)
                         setUser(jwt_decode(data.access))
+                        console.log('user', user)
                         localStorage.setItem('authTokens', JSON.stringify(data))
                     } catch (error) { console.log('error', error) }
 
@@ -72,17 +82,29 @@ export const AuthProvider = ({ children }) => {
                 if (loading) {
                     setLoading(false)
                 }
-                //console.log('acces updated')
+                console.log('acces updated')
             } catch (error) {
                 console.error('Error updating token: ')
             }
         }
     }
 
+    const reload = () => {
+        console.log('i reload')
+        setLoading(true)
+    }
+
     useEffect(() => {
 
+        console.log('i am paying attntion to loading')
+
         if (loading) {
+            console.log('loading')
+
             updateToken()
+        }
+        else {
+            console.log('not loading')
         }
 
         const fourminutes = 1000 * 600 * 4
@@ -98,11 +120,12 @@ export const AuthProvider = ({ children }) => {
     let state = {
         'user': user,
         'loginUser': loginUser,
-        'logoutUser': logoutUser
+        'logoutUser': logoutUser,
+        'reload': reload,
     }
 
     return (
         <AuthContext.Provider value={state}>
-            {children}
+            {loading ? <p>Loading...</p> : children}
         </AuthContext.Provider>)
 }

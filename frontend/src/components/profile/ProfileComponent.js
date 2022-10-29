@@ -1,22 +1,21 @@
 import { useFormik } from 'formik'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Modal } from '../Modal'
 import { API_CHANGE_AVATAR, AUTH_HEADER } from '../../constants/index.js'
+import AuthContext from '../../context/AuthContext'
 
-export default function ProfileComponent({ user }) {
-    const { pk, username, avatar, about } = user
+export default function ProfileComponent() {
+    const { user  } = useContext(AuthContext)
+    const { user_id, username, avatar } = user
     const [shouldShowModal, setShouldShowModal] = useState(false)
 
     return (
         <>
             <div>
                 <div className="m-2 mb-4"><img src={avatar} className=' rounded-circle avatar-md' /></div>
-                <span className='fa fa-pencil btn btn-primary btn-circle btn-xs'></span>
-                <button type="button" className="btn btn-primary" onClick={() => setShouldShowModal(!shouldShowModal)}>
-                    Launch static backdrop modal
-                </button>
+                <button type="button" className='fa fa-pencil btn btn-primary btn-circle btn-xs' onClick={() => setShouldShowModal(!shouldShowModal)}/>
                 <Modal shouldShow={shouldShowModal} onRequestClose={() => { setShouldShowModal(false) }}>
-                    <ImageUploadForm />
+                    <ImageUploadForm pk={user_id} />
                 </Modal>
                 <h5>{username}</h5>
                 <p>About</p>
@@ -26,33 +25,42 @@ export default function ProfileComponent({ user }) {
     )
 }
 
-const ImageUploadForm = (pk) => {
-    const [selectedImage, setSelectedImage] = useState(null);
+const ImageUploadForm = ({ pk }) => {
+    const { reload } = useContext(AuthContext)
+    const [selectedImage, setSelectedImage] = useState('');
     const formik = useFormik({
         initialValues: {
-            image: null,
+            avatar: null,
         },
         onSubmit: async (values) => {
             console.log('values', values)
-            var formData = new FormData()
-            //formData.append('avatar', image)
-            const response = await fetch(API_CHANGE_AVATAR + pk + '/',
-                {
-                    headers:
-                    {
-                        ...AUTH_HEADER(),
-                        'Content-Type': 'multipart/form-data'
-                    },
-                    method: "POST",
-                    body: JSON.stringify(formData)
-                })
-            let data = await response.json()
+            let formData = new FormData()
+            formData.append('avatar', values.avatar, values.avatar.name)
 
-            if (data.status === 201) {
-                return data.data
+            console.log('formData', formData)
+
+            const url = API_CHANGE_AVATAR 
+
+            let response = await fetch(url, {
+                headers: {
+                    //'Content-type': 'multipart/form-data', using this make problem
+                    'Authorization': localStorage.getItem('authTokens') ? 'Bearer ' + JSON.parse(localStorage.getItem('authTokens')).access : null,
+                },
+                method: "PUT",
+                body: formData,
+
+            })
+
+            if (response.status === 200) {
+                console.log('updated')
+                reload()
             }
-        }
-    })
+            else {
+                console.log('error')
+
+                return { error: response.statusText }
+            }
+        }})
 
     return (
         <form onSubmit={formik.handleSubmit}>
@@ -68,12 +76,12 @@ const ImageUploadForm = (pk) => {
 
             <br />
             <input
+                id="avatar"
                 type="file"
-                name="image"
+                name="avatar"
                 accept="image/jpeg,image/png,image/gif"
-                value={formik.values.image}
-                onChange={formik.handleChange}
-                
+                onChange={e => { formik.setFieldValue('avatar', e.currentTarget.files[0]) }}
+
             />
             <button type='submit' className='btn btn-primary'>Upload</button>
         </form>

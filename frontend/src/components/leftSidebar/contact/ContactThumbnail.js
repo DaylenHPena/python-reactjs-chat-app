@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import ChatContext from '../../context/ChatContext'
-import ConnectionContext from '../../context/ConnectionContext'
+import ChatContext from '../../../context/ChatContext'
+import ConnectionContext from '../../../context/ConnectionContext'
 
 export default function ContactThumbnail({ user }) {
     const { pk, username, avatar } = user

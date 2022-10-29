@@ -1,41 +1,90 @@
+/* 
+LAYOUT 
+LEFT PANEL
+RIGHT PANEL
+BACKGROUNDS 
+MESSAGE
+CHAT
+IMAGES
+FONT
+FORMS
+BUTTONS
+*/
+
+
 :root {
-  --bg-dark: #e6ebf5;
-  --bg-left: #f5f7fb;
+  --bg-dark: #3a3153;
+  --bg-left: #211921;
   --navbar-height: 60px;
   --border: #f0eff5;
-  --input-background: rgb(228, 233, 239);
+  --input-background: black;
 }
 
 html {
-  font-size: 12px;
+  font-size: 15px;
   text-align: center;
+  background-color: #3a3153 !important;
+}
+
+body {
+  background-color: #3a3153 !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span {
+  color: white;
 }
 
 /* LAYOUT */
 /* LEFT PANEL*/
 #leftsidebar {
   height: 100vh;
-  box-shadow: 0 2px 4px rgb(15 34 58 / 12%);
+  box-shadow: 1px 1px 6px 4px rgb(52 41 52 / 74%);
 }
 
 #leftsidebar,
 #profile,
-#contacts {
+#contacts,
+#add-contacts {
   width: 20%;
+  background-color: var(--bg-left)
+}
+
+@media all and (max-width:768px) {
+
+  #leftsidebar,
+  #profile,
+  #contacts,
+  #add-contacts {
+    width: 100%;
+  }
 }
 
 .top-nav {
   height: var(--navbar-height);
+  background-color: var(--bg-left);
 }
 
-.top-nav.bg-dark-nav {
-  background-color: var(--bg-dark);
-  color: black;
+.top-nav p {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0;
 }
+
 
 /* RIGHT PANEL*/
 #main {
   width: 80%;
+}
+
+#room-detail {
+  box-shadow: 1px 1px 6px 4px rgb(52 41 52 / 74%);
 }
 
 #message-form {
@@ -45,6 +94,7 @@ html {
   position: absolute;
   bottom: 0;
   width: 100%;
+  border-top: 1px solid #80808033;
 }
 
 #chat-log {
@@ -87,23 +137,22 @@ html {
   padding: 0.3rem 0.9rem;
   border-radius: 6px;
   max-width: 60%;
+  margin-bottom: 8px;
+
 }
 
 .self-message {
   float: right;
   margin-right: 1rem;
   color: white;
-  background-color: #9fb18e;
-  margin-bottom: 2px;
+  background-color: #5f43b2;
 }
 
 .others-message {
   float: left;
   margin-right: 1.5rem;
   color: white;
-  background-color: #9cb3c3;
-  margin-bottom: 2px;
-
+  background-color: var(--bg-left);
 }
 
 /* CHAT */
@@ -181,6 +230,10 @@ html {
 input.form-control {
   background-color: var(--input-background) !important;
   border-color: transparent !important;
+  color: white;
+}
+input.form-control:focus {
+  color: white;
 }
 
 /* BUTTONS */
@@ -210,6 +263,12 @@ input.form-control {
   border-radius: 35px;
   font-size: 12px;
   text-align: center;
+}
+
+#btn-toggle-add-contact {
+  position: absolute;
+  bottom: 5%;
+  right: 3%;
 }
 
 /************************************/
@@ -252,4 +311,26 @@ input.form-control {
   animation-duration: 1s;
   -webkit-animation-name: horizontal-shaking;
   animation-name: horizontal-shaking;
+}
+
+.unimplemented-actions {
+  display: none !important;
+}
+
+.btn-primary {
+  --bs-btn-bg: #5f43b2 !important;
+  
+}
+
+
+.btn-primary {
+    --bs-btn-bg: #5f43b2 !important;
+    --bs-btn-border-color: #5f43b2 !important;
+    --bs-btn-hover-bg: #633cd6 !important;
+    --bs-btn-hover-border-color: #451ebb !important;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-bg: #451ebb !important;
+    --bs-btn-active-border-color: #4914e7 !important;
+    --bs-btn-disabled-bg: #5f43b2 !important;
+    --bs-btn-disabled-border-color: #5f43b2 !important;
 }

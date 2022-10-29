@@ -19,8 +19,8 @@ function ChatInput() {
 
   return (
     <div className='position-relative'>
-      <form id="message-form" className="border-top" onSubmit={handleSubmit}>
-        <input name="message" type="text" placeholder="Write a message..." className='form-control bg-light '></input>
+      <form id="message-form" onSubmit={handleSubmit}>
+        <input name="message" type="text" placeholder="Write a message..." className='form-control '></input>
         <button type='submit' className="btn btn-outline-secondary"><i
           className="fa fa-paper-plane"></i></button>
       </form>

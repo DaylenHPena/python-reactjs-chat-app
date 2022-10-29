@@ -16,6 +16,7 @@ class ChatConsumer(WebsocketConsumer):
     '''
     Types of message:
     chat_message
+    new_message
     '''
 
     def connect(self):
@@ -23,6 +24,7 @@ class ChatConsumer(WebsocketConsumer):
         # print('This ChatConsumer channel_name automatic generated is ', self.channel_name)
         # TODO: check error
         self.room_name = self.scope['url_route']['kwargs']['room_name']
+        self.chat_room = self.get_chat_room()
         self.get_personal_channel_name()
 
         self.listen_personal_channel()
@@ -31,38 +33,42 @@ class ChatConsumer(WebsocketConsumer):
 
         self.get_group_channels()
 
-    # send message to a group after typing it in the chat form
+    # send message to a group right after typing it in the chat form
     def receive(self, text_data=None, bytes_data=None):
+        print('recive')
         text_data_json = json.loads(text_data)
         text_data_json['created_at'] = datetime.now().isoformat()
         text_data_json['sender'] = self.personal_channel
 
         # print('Socket is receiving the message: {0} that was sent by {1} with personal channel {2} '.format(text_data_json['message'],self.scope['user'], self.personal_channel))
 
+        # send to other individual
         async_to_sync(self.channel_layer.group_send)(
             self.receiver_personal_channel,
             text_data_json
         )
+
+        # send to self
         async_to_sync(self.channel_layer.send)(
             self.channel_name,
             text_data_json
         )
 
-        # self.save_db(text_data_json)
-
-    def disconnect(self, close_code):
-        pass
-
     # Receive message from room group
     def chat_message(self, event):
-        # event={'message':'','date':'',...}
-        print('event', event)
+        # event={'text': '', 'chat_room': #, 'type': '', 'created_at': '', 'sender': ''}
+        print('chat_message', event)
         # print('chat_message is working now for message: {0} and {1} is receiving it'.format(event['message'], self.scope['user']))
 
         # Send message to WebSocket
         self.send(text_data=json.dumps(event))
+        self.save_db(event)
+
+    def proxy_message(self, event):
+        pass
 
     def new_chat(self, event):
+        print('new_chat', event)
         self.send(text_data=json.dumps(event))
 
     def get_personal_channel_name(self):
@@ -104,27 +110,38 @@ class ChatConsumer(WebsocketConsumer):
                 chat_room = ChatRoom.objects.filter(users__pk=int(self.get_personal_channel_name())).get(
                     users__pk=int(self.get_receiver_personal_channel_name()))
                 return chat_room
-            except:return None
+            except:
+                return None
         return None
 
     def save_db(self, text_data_json):
-        print('get_room_type', self.get_room_type())
-        print('chat_room', text_data_json['chat_room'])
+        print('save_db', text_data_json)
+        print('self.get_room_type()',self.get_room_type())
+        print('self.get_chat_room()',self.get_chat_room())
         if self.get_room_type() == 'private':
             chat_room = self.get_chat_room()
             if not chat_room:
-                # TODO add type and users
-                chat_room = ChatRoom.objects.create()
-                chat_room.users.add(int(self.get_receiver_personal_channel_name()))
-                chat_room.users.add(int(self.get_personal_channel_name()))
-                chat_room.save()
-                self.receive({'type': 'new_chat', 'text': '{0} just started a new chat'.format(self.channel_name)})
+                chat_room = self.new_chat_room_db()
+                self.receive(json.dumps(
+                    {'type': 'new_chat', 'text': '{0} just started a new chat'.format(self.scope['user'])}))
+
         else:
             # TODO change to real way
             chat_room = ChatRoom.objects.get(name=text_data_json['chat_room'][1:])
 
         message = Message(chat_room=chat_room,
-                          text=text_data_json['text'],
-                          sender=self.scope['user']
-                          )
+                              text=text_data_json['text'],
+                              sender=self.scope['user']
+                              )
         message.save()
+
+    def new_chat_room_db(self):
+        # TODO add type and users
+        chat_room = ChatRoom.objects.create()
+        chat_room.users.add(int(self.get_receiver_personal_channel_name()))
+        chat_room.users.add(int(self.get_personal_channel_name()))
+        chat_room.save()
+        return chat_room
+
+    def disconnect(self, close_code):
+        pass

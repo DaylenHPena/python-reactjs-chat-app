@@ -1,39 +1,23 @@
 import React, { useState, useEffect, useContext } from 'react'
-import ChatList from '../components/chatList/ChatList'
+import ChatList from '../components/leftSidebar/chatList/ChatList'
 import ChatHeader from '../components/chatWindow/ChatHeader';
 import ChatInput from '../components/chatWindow/ChatInput';
 import MessageList from '../components/chatWindow/MessageList';
-import UserConf from '../components/UserConf'
-import { API_CHATS, API_CONTACTS,  HTTP_HEADERS } from '../constants';
+import UserConf from '../components/leftSidebar/UserConf'
+import { API_CONTACTS,  HTTP_HEADERS } from '../constants';
 import ConnectionContext from '../context/ConnectionContext';
 import ChatContext from '../context/ChatContext';
 import ProfileSidebar from '../components/profile/ProfileSidebar';
-import ContactSidebar from '../components/contact/ContactSidebar';
-import AddContactSidebar from '../components/contact/AddContactSidebar';
+import ContactSidebar from '../components/leftSidebar/contact/ContactSidebar';
+import AddContactSidebar from '../components/leftSidebar/contact/AddContactSidebar';
 
 
 function HomePage() {
   let { onOpen, client } = useContext(ConnectionContext)
-  let { chats, updateChats, actualChat, receiveMessage } = useContext(ChatContext)
+  let { chats, updateChats, actualChat, receiveMessage,getChats } = useContext(ChatContext)
   const [contacts, setContacts] = useState([])
 
-  const getChats = async () => {
-    let response = await fetch(API_CHATS, {
-      ...HTTP_HEADERS(),
-      method: "GET",
-    })
-
-    let data = await response.json()
-
-    if (response.status === 200) {
-      console.log('data', data)
-      return data;
-    }
-    else {
-      return { error: response.statusText }
-    }
-  }
-
+ 
   const getContacts = async () => {
     let response = await fetch(API_CONTACTS, {
       ...HTTP_HEADERS(),
@@ -43,7 +27,6 @@ function HomePage() {
     let data = await response.json()
 
     if (response.status === 200) {
-      console.log('data', data)
       return data;
     }
     else {
@@ -79,11 +62,6 @@ function HomePage() {
     }
   })
 
-  useEffect(() => {
-    console.log('si vi que se actualizo')
-  }, [actualChat])
-
-
   const chatWindow = () => {
     return (
       <>
@@ -117,7 +95,7 @@ function HomePage() {
         <ContactSidebar contacts={contacts}/>
         <AddContactSidebar/>
 
-        <div id="leftsidebar" className='border-end border-opacity-50 p-0 bg-sidebar'>
+        <div id="leftsidebar" className='p-0 bg-sidebar'>
           <UserConf />
           <Search />
           <ChatList chats={chats} />
