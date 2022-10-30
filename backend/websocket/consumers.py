@@ -12,6 +12,10 @@ CHAT_MESSAGE = 2
 NEW_CHAT = 3
 
 
+class ChatRoomConnector:
+    chat_class = ChatRoom
+
+
 class ChatConsumer(WebsocketConsumer):
     '''
     Types of message:
@@ -92,6 +96,7 @@ class ChatConsumer(WebsocketConsumer):
                                             self.personal_channel)}))
 
     def get_receiver_personal_channel_name(self):
+        # TODO change to check type of chat
         self.receiver_personal_channel = self.room_name
         # print('I am ready to send to {0}'.format(self.receiver_personal_channel))
         return self.receiver_personal_channel
@@ -116,23 +121,26 @@ class ChatConsumer(WebsocketConsumer):
 
     def save_db(self, text_data_json):
         print('save_db', text_data_json)
-        print('self.get_room_type()',self.get_room_type())
-        print('self.get_chat_room()',self.get_chat_room())
+        print('self.get_room_type()', self.get_room_type())
+        print('self.get_chat_room()', self.get_chat_room())
         if self.get_room_type() == 'private':
             chat_room = self.get_chat_room()
             if not chat_room:
                 chat_room = self.new_chat_room_db()
                 self.receive(json.dumps(
-                    {'type': 'new_chat', 'text': '{0} just started a new chat'.format(self.scope['user'])}))
+                    {'type': 'new_chat',
+                     'text': '{0} just started a new chat'.format(self.scope['user']),
+                     'room_id': chat_room.pk
+                     }))
 
         else:
             # TODO change to real way
             chat_room = ChatRoom.objects.get(name=text_data_json['chat_room'][1:])
 
         message = Message(chat_room=chat_room,
-                              text=text_data_json['text'],
-                              sender=self.scope['user']
-                              )
+                          text=text_data_json['text'],
+                          sender=self.scope['user']
+                          )
         message.save()
 
     def new_chat_room_db(self):
