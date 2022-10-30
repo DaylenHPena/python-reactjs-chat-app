@@ -30,6 +30,7 @@ class ChatRoom(models.Model):
             raise AttributeError('A private chat must have 2 users')
 
 
+
 # provitional, this might become a text file for messages
 class Message(models.Model):
     chat_room = models.ForeignKey(ChatRoom, related_name='messages', on_delete=models.CASCADE)

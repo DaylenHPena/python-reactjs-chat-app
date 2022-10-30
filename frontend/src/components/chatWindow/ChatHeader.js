@@ -1,10 +1,9 @@
 import React, { useContext } from 'react'
 import ChatContext from '../../context/ChatContext'
-import ConnectionContext from '../../context/ConnectionContext'
 
 function ChatHeader() {
   let { actualChat } = useContext(ChatContext)
-  const { name,img } = actualChat || {}
+  const { name, img } = actualChat || {}
 
   return (
     <div id="room-detail" className="d-flex p-2 align-items-center top-nav">

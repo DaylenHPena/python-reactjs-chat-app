@@ -1,4 +1,3 @@
-import React from 'react'
 import ChatThumbnail from './ChatThumbnail'
 
 function ChatList({chats}) {
@@ -7,7 +6,7 @@ function ChatList({chats}) {
             <ul className='list-unstyled mt-2'>
                 {chats && chats.map(chat => (
                     <>
-                        <li key={chat.identifier} id={chat.identifier} ><ChatThumbnail chat={chat}></ChatThumbnail></li></>
+                        <li key={chat.identifier} id={chat.identifier} ><ChatThumbnail key={chat.identifier}  chat={chat}></ChatThumbnail></li></>
                 ))}
             </ul>
         </>

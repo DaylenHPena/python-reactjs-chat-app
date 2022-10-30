@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import jwt_decode from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
 
-import axios from 'axios'
+import { getToken, refreshAccessToken } from "../service/ServiceApi";
 
 const AuthContext = createContext();
 export default AuthContext;
@@ -18,33 +18,16 @@ export const AuthProvider = ({ children }) => {
     let navigate = useNavigate()
 
     let loginUser = async (values) => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }
-        axios.post('http://localhost:8000/api/token/', JSON.stringify(values), config).fetch().catch()
-        let response = await fetch('http://localhost:8000/api/token/', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(values)
-        })
-
-        let data = await response.json()
-
-        if (response.status === 200) {
-            setAuthTokens(data)
-            let access = data.access
-            if (access) {
-                setUser(jwt_decode(access))
-                localStorage.setItem('authTokens', JSON.stringify(data))
+        getToken(values)
+            .then(tokens => {
+                setAuthTokens(tokens)
+                setUser(jwt_decode(tokens.access))
+                localStorage.setItem('authTokens', JSON.stringify(tokens))
                 navigate('/')
-            } else { alert('Invalid Token') }
-        } else {
-            return response.status
-        }
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
     let logoutUser = () => {
@@ -56,42 +39,22 @@ export const AuthProvider = ({ children }) => {
 
     let updateToken = async () => {
         if (authTokens) {
-            try {
-                let response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ 'refresh': authTokens.refresh })
+            refreshAccessToken()
+                .then((tokens) => {
+                    setAuthTokens(tokens)
+                    setUser(jwt_decode(tokens.access))
+                    console.log('user', user)
+                    localStorage.setItem('authTokens', JSON.stringify(tokens))
+                    console.log('acces updated')
+                })
+                .catch(error => {
+                    console.log('Error in updateToken: ', error)
                 })
 
-                let data = await response.json()
-
-                if (response.status === 200) {
-                    try {
-                        setAuthTokens(data)
-                        setUser(jwt_decode(data.access))
-                        console.log('user', user)
-                        localStorage.setItem('authTokens', JSON.stringify(data))
-                    } catch (error) { console.log('error', error) }
-
-                } else {
-                    console.log('error', response.status)
-                }
-
-                if (loading) {
-                    setLoading(false)
-                }
-                console.log('acces updated')
-            } catch (error) {
-                console.error('Error updating token: ')
-            }
         }
-    }
-
-    const reload = () => {
-        console.log('i reload')
-        setLoading(true)
+        if (loading) {
+            setLoading(false)
+        }
     }
 
     useEffect(() => {
@@ -107,21 +70,13 @@ export const AuthProvider = ({ children }) => {
             console.log('not loading')
         }
 
-        const fourminutes = 1000 * 600 * 4
-        let interval = setInterval(() => {
-            if (authTokens) { updateToken() }
-        }, fourminutes);
-
-        return () => clearInterval(interval)
-
-    }, [authTokens, loading])
+    }, [loading])
 
 
     let state = {
         'user': user,
         'loginUser': loginUser,
         'logoutUser': logoutUser,
-        'reload': reload,
     }
 
     return (

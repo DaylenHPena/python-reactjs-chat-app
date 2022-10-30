@@ -16,15 +16,17 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <AuthProvider>
-          <ChatProvider>
-            <Routes>
-              <Route exact path="/" element={
-                <><ConnectionProvider><PrivateRoute />{<HomePage />}</ConnectionProvider></>} >
-              </Route>
-              <Route path="/login" element={<LoginPage />} ></Route>
-              <Route path="/registration" element={<RegistrationPage />} ></Route>
-            </Routes>
-          </ChatProvider>
+          <ConnectionProvider>
+            <ChatProvider>
+              <Routes>
+                <Route exact path="/" element={
+                  <><PrivateRoute />{<HomePage />}</>} >
+                </Route>
+                <Route path="/login" element={<LoginPage />} ></Route>
+                <Route path="/registration" element={<RegistrationPage />} ></Route>
+              </Routes>
+            </ChatProvider>
+          </ConnectionProvider>
         </AuthProvider>
       </BrowserRouter>
     </div>

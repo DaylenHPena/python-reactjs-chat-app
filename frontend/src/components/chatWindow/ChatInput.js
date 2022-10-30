@@ -9,6 +9,7 @@ function ChatInput() {
 
   let handleSubmit = (e) => {
     e.preventDefault();
+    console.log('submitting')
     client.send(JSON.stringify({
       'text': e.target.message.value,
       'chat_room': actualChat.pk,

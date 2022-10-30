@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { createContext } from "react";
+import { connectWebSocket } from '../service/ServiceApi';
 import AuthContext from './AuthContext';
 
 const ConnectionContext = createContext()
@@ -18,10 +19,6 @@ export const ConnectionProvider = ({ children }) => {
     }, [user])
 
     useEffect(() => {
-        //TODO:
-    }, [client])
-
-    useEffect(() => {
         if (url) {
             connect(url);
         }
@@ -29,12 +26,15 @@ export const ConnectionProvider = ({ children }) => {
 
     const connect = (url) => {
         disconnect()
-        if (localStorage.getItem('authTokens')) {
-            let chatSocket = new WebSocket('ws://127.0.0.1:8000/ws/chat/' + url + '/?token=' + JSON.parse(localStorage.getItem('authTokens')).access)
-            setClient(chatSocket)
+        const ws = connectWebSocket(url)
+        if (ws) {
+            setClient(ws)
+            //console.log('client', client)
             setUrl(url)
-            return chatSocket
+
         }
+
+        return client
     }
 
     const disconnect = () => {
@@ -44,17 +44,8 @@ export const ConnectionProvider = ({ children }) => {
         }
     }
 
-    const onOpen = () => {
-        if (client) {
-            client.onopen = () => {
-                console.log('WebSocket Client Connected');
-            };
-        }
-    }
-
     let state = {
         'client': client,
-        'onOpen': onOpen,
         'connect': connect,
         'url': url,
         'disconnect': disconnect

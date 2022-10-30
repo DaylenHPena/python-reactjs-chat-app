@@ -3,17 +3,18 @@ import React, { useContext, useState } from 'react'
 import { Modal } from '../Modal'
 import { API_CHANGE_AVATAR, AUTH_HEADER } from '../../constants/index.js'
 import AuthContext from '../../context/AuthContext'
+import { updateAvatarImage } from '../../service/ServiceApi'
 
 export default function ProfileComponent() {
-    const { user  } = useContext(AuthContext)
-    const { user_id, username, avatar } = user
+    const { user } = useContext(AuthContext)
+    const { user_id, username, avatar } = user || {}
     const [shouldShowModal, setShouldShowModal] = useState(false)
 
-    return (
-        <>
+    return (user
+        ? <>
             <div>
                 <div className="m-2 mb-4"><img src={avatar} className=' rounded-circle avatar-md' /></div>
-                <button type="button" className='fa fa-pencil btn btn-primary btn-circle btn-xs' onClick={() => setShouldShowModal(!shouldShowModal)}/>
+                <button type="button" className='fa fa-pencil btn btn-primary btn-circle btn-xs' onClick={() => setShouldShowModal(!shouldShowModal)} />
                 <Modal shouldShow={shouldShowModal} onRequestClose={() => { setShouldShowModal(false) }}>
                     <ImageUploadForm pk={user_id} />
                 </Modal>
@@ -22,12 +23,14 @@ export default function ProfileComponent() {
                 <p>Love long walks on the beach and sunsets</p>
             </div>
         </>
+        : null
     )
 }
 
 const ImageUploadForm = ({ pk }) => {
     const { reload } = useContext(AuthContext)
     const [selectedImage, setSelectedImage] = useState('');
+
     const formik = useFormik({
         initialValues: {
             avatar: null,
@@ -38,29 +41,9 @@ const ImageUploadForm = ({ pk }) => {
             formData.append('avatar', values.avatar, values.avatar.name)
 
             console.log('formData', formData)
-
-            const url = API_CHANGE_AVATAR 
-
-            let response = await fetch(url, {
-                headers: {
-                    //'Content-type': 'multipart/form-data', using this make problem
-                    'Authorization': localStorage.getItem('authTokens') ? 'Bearer ' + JSON.parse(localStorage.getItem('authTokens')).access : null,
-                },
-                method: "PUT",
-                body: formData,
-
-            })
-
-            if (response.status === 200) {
-                console.log('updated')
-                reload()
-            }
-            else {
-                console.log('error')
-
-                return { error: response.statusText }
-            }
-        }})
+            updateAvatarImage(formData)
+        }
+    })
 
     return (
         <form onSubmit={formik.handleSubmit}>

@@ -1,14 +1,20 @@
-import React, { useState } from 'react'
 import ToogleOffCanvas from '../../../utils/ToogleOffCanvas'
 import ContactThumbnail from './ContactThumbnail'
 
-export default function ContactSidebar({ contacts }) {
+
+export default function ContactSidebar({contacts,onConnect}) {
+
+
+    const connectEvent = (pk) => {
+        onConnect(pk)
+        document.getElementById('close').click();
+    }
 
     //TODO: get contacts only when this window is visible
     return (
         <div id="contacts" className="offcanvas offcanvas-start p-0 border-end border-opacity-50 pe-0 bg-sidebar">
             <div className="d-flex px-4 align-items-center top-nav bg-dark-nav">
-                <span className='fa fa-arrow-left me-2' onClick={ToogleOffCanvas} data-toogle="contacts"></span>
+                <span id='close' className='fa fa-arrow-left me-2' onClick={ToogleOffCanvas} data-toogle="contacts"></span>
                 <p>Contacts</p>
             </div>
             <div className='px-2 mt-2'>
@@ -24,7 +30,7 @@ export default function ContactSidebar({ contacts }) {
                 {contacts.map(contact => (
                     <>
                         <li key={contact.pk} id={contact.pk} >
-                            {<ContactThumbnail user={contact} />}
+                            {<ContactThumbnail user={contact} onClick={connectEvent} />}
                         </li>
                     </>
                 ))}

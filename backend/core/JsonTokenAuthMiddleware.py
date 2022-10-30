@@ -12,18 +12,23 @@ from core.settings import SECRET_KEY, SIMPLE_JWT
 #frontend new WebSocket(ws://8000/{your_path}?token=${localStorage.getItem('token')})
 @database_sync_to_async
 def get_user(token_key):
+    print('get_user first')
     #print('token_key', token_key)
     # If you are using jwt
     try:
         user_id: int = jwt.decode(token_key, SECRET_KEY, algorithms=[SIMPLE_JWT['ALGORITHM']]).get(
             SIMPLE_JWT['USER_ID_CLAIM'])
     except jwt.exceptions.DecodeError:
+        print('DecodeError')
         return AnonymousUser()
     except jwt.exceptions.ExpiredSignatureError:
+        print('ExpiredSignatureError')
         return AnonymousUser()
     try:
+        print('user_id',user_id)
         return AnonymousUser() if user_id is None else get_user_model().objects.get(id=user_id)
     except get_user_model().DoesNotExist:
+        print('DoesNotExist')
         return AnonymousUser()
 
 
@@ -32,6 +37,7 @@ class TokenAuthMiddleware(BaseMiddleware):
         super().__init__(inner)
 
     async def __call__(self, scope, receive, send):
+        print('__call__')
         #print('scope', scope)
         try:
             token_key = (dict((x.split('=') for x in scope['query_string'].decode().split("&")))).get('token', None)

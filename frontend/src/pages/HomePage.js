@@ -4,65 +4,57 @@ import ChatHeader from '../components/chatWindow/ChatHeader';
 import ChatInput from '../components/chatWindow/ChatInput';
 import MessageList from '../components/chatWindow/MessageList';
 import UserConf from '../components/leftSidebar/UserConf'
-import { API_CONTACTS,  HTTP_HEADERS } from '../constants';
 import ConnectionContext from '../context/ConnectionContext';
 import ChatContext from '../context/ChatContext';
 import ProfileSidebar from '../components/profile/ProfileSidebar';
 import ContactSidebar from '../components/leftSidebar/contact/ContactSidebar';
 import AddContactSidebar from '../components/leftSidebar/contact/AddContactSidebar';
+import { retrieveContacts } from '../service/ServiceApi';
 
 
 function HomePage() {
-  let { onOpen, client } = useContext(ConnectionContext)
-  let { chats, updateChats, actualChat, receiveMessage,getChats } = useContext(ChatContext)
+  let { client } = useContext(ConnectionContext)
+  let { chats, updateChats, actualChat, receiveMessage, getChats } = useContext(ChatContext)
   const [contacts, setContacts] = useState([])
+  const { connect } = useContext(ConnectionContext)
+  const { connectWithUser } = useContext(ChatContext)
 
- 
-  const getContacts = async () => {
-    let response = await fetch(API_CONTACTS, {
-      ...HTTP_HEADERS(),
-      method: "GET",
-    })
-
-    let data = await response.json()
-
-    if (response.status === 200) {
-      return data;
-    }
-    else {
-      return { error: response.statusText }
-    }
-
-  }
 
   //run on first render
   useEffect(() => {
     //get all chats from database
-    async function fetchData() {
-      let initialChats = await getChats()
-      let initialContacts = await getContacts()
-      if (initialChats.error || initialContacts.error) {
-        console.log('Unauthorized') //TODO:Handle error
-      }
-      else {
-        updateChats(initialChats)
-        setContacts(initialContacts)
-      }
-    }
-    fetchData()
+    getChats()
+      .then((data) => { updateChats(data) })
+      .then(() => {
+        retrieveContacts()
+          .then(data => setContacts(data))
+      })
+      .catch(error => { console.log('Unauthorized: ',error) })
   }, [])
+
+  const onNewContact = (pk) => {
+    retrieveContacts()
+      .then(data => setContacts(data))
+      .catch(error => { console.log(error) })
+    connectEvent(pk)
+  }
+
+  const connectEvent = (pk) => {
+    connect(pk)
+    connectWithUser(pk)
+  }
 
   // run on every render 
   useEffect(() => {
-    onOpen()
     if (client) {
+      //console.log('the client is here')
       client.onmessage = ((message) => {
         receiveMessage(message)
       })
     }
   })
 
-  const chatWindow = () => {
+  const ChatWindow = () => {
     return (
       <>
         <ChatHeader />
@@ -92,8 +84,8 @@ function HomePage() {
       <div className='row m-0'>
 
         <ProfileSidebar />
-        <ContactSidebar contacts={contacts}/>
-        <AddContactSidebar/>
+        <ContactSidebar contacts={contacts} onConnect={connectEvent}/>
+        <AddContactSidebar onNewContact={onNewContact} />
 
         <div id="leftsidebar" className='p-0 bg-sidebar'>
           <UserConf />
@@ -102,7 +94,9 @@ function HomePage() {
         </div>
 
         <div className='p-0' id="main">
-          {actualChat ? chatWindow() : <><h3>Start chatting with friends</h3></>}
+          {actualChat
+            ? <ChatWindow />
+            : <><h3>Start chatting with friends</h3></>}
         </div>
 
       </div>

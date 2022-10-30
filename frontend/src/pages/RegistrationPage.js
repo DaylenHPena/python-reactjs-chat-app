@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
-import { API_REGISTRATION, HTTP_HEADERS } from "../constants";
+import { createUser } from "../service/ServiceApi";
 
 function RegistrationPage() {
 
@@ -14,24 +14,9 @@ function RegistrationPage() {
         },
 
         onSubmit: async (values) => {
-            console.log('submitting', values)
-            let response = await fetch(API_REGISTRATION, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                method: "POST",
-                body: JSON.stringify({ 'username': values.username, 'password': values.password })
-            })
-
-            let data = await response.json()
-
-            if (response.status === 201) {
-                console.log(response.data)
-                navigate('/login')
-            }
-            else {
-                console.log('errors', response.data)
-            }
+            createUser({ 'username': values.username, 'password': values.password })
+                .then(()=>{navigate('/login')})
+                .catch(error => { console.error(error) })      
         },
         //TODO: validate fields
         //TODO: add error fields to html
@@ -49,8 +34,6 @@ function RegistrationPage() {
                 errors.confirm_password = "Must be equal to your password"
             }
             //else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.password)) { errors.email = 'Invalid email address'; }
-
-            console.log(errors)
             return errors;
 
         }

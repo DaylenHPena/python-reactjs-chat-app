@@ -4,7 +4,7 @@ from datetime import datetime
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
-from .models import ChatRoom, Message
+from chat.models import ChatRoom, Message
 
 CONNECTION_ON = 0
 CONNECTION_OFF = 1
@@ -28,6 +28,7 @@ class ChatConsumer(WebsocketConsumer):
         # print('This ChatConsumer channel_name automatic generated is ', self.channel_name)
         # TODO: check error
         self.room_name = self.scope['url_route']['kwargs']['room_name']
+        print('room name: ',self.room_name)
         self.chat_room = self.get_chat_room()
         self.get_personal_channel_name()
 
@@ -81,6 +82,7 @@ class ChatConsumer(WebsocketConsumer):
         :return: void
         '''
         self.personal_channel = '{0}'.format(self.scope['user'].pk)
+        print(self.personal_channel)
         return self.personal_channel
 
     def listen_personal_channel(self):
@@ -127,10 +129,11 @@ class ChatConsumer(WebsocketConsumer):
             chat_room = self.get_chat_room()
             if not chat_room:
                 chat_room = self.new_chat_room_db()
+
                 self.receive(json.dumps(
                     {'type': 'new_chat',
                      'text': '{0} just started a new chat'.format(self.scope['user']),
-                     'room_id': chat_room.pk
+                     'room_name': self.room_name
                      }))
 
         else:
