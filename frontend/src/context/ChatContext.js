@@ -8,16 +8,16 @@ export default ChatContext
 export const ChatProvider = ({ children }) => {
 
     const [chats, setchats] = useState([])
-    const [actualChat, setActualChat] = useState(null)
+    const [activeChat, setActiveChat] = useState(null)
     const [proxyChat, setProxyChat] = useState(null)
 
     const updateChats = (values) => {
         setchats(values)
-        //update actualChat as well, cause it might have changed
+        //update activeChat as well, cause it might have changed
         for (const key in chats) {
-            if (chats[key]['pk'] === actualChat.pk) {
+            if (chats[key]['pk'] === activeChat.pk) {
                 console.log('es el mimso que el actual debe actualizar')
-                setActualChat(chats[key])
+                setActiveChat(chats[key])
                 break;
             }
         }
@@ -32,7 +32,7 @@ export const ChatProvider = ({ children }) => {
                 const itChat = chats[key]
                 if (itChat.pk == message.chat_room) {
                     itChat['messages'] = [...itChat['messages'], message] //add new message
-                    if (itChat.pk !== actualChat.pk) {
+                    if (itChat.pk !== activeChat.pk) {
                         markUnread(itChat)
                     }
                     updateChats([...chats])
@@ -46,11 +46,11 @@ export const ChatProvider = ({ children }) => {
                 .then((apdatedChats) => {
                     updateChats(apdatedChats)
                     //check if the new chat is result of the proxy chat by checking the name
-                    if (actualChat.identifier == parsedMessage.room_name) {
+                    if (activeChat.identifier == parsedMessage.room_name) {
                         for (const key in chats) {
                             const it_chat = chats[key]
                             if (it_chat.identifier == parsedMessage.room_name) {
-                                updateActualChat(it_chat)
+                                updateActiveChat(it_chat)
                             }
                         }
                     }
@@ -82,11 +82,11 @@ export const ChatProvider = ({ children }) => {
         console.log('chat[unread]', chat['unread'])
     }
 
-    const updateActualChat = (chat) => {
+    const updateActiveChat = (chat) => {
         markRead(chat)
-        setActualChat(chat)
-        console.log('actualChat !== proxyChat', actualChat !== proxyChat)
-        if (proxyChat && actualChat !== proxyChat) {
+        setActiveChat(chat)
+        console.log('activeChat !== proxyChat', activeChat !== proxyChat)
+        if (proxyChat && activeChat !== proxyChat) {
             //clean  proxy chat
             console.log('i clean proxy chat')
             setProxyChat(null)
@@ -103,7 +103,7 @@ export const ChatProvider = ({ children }) => {
                 let exist = false
                 for (const key in chats) {
                     if (('identifier' in chats[key]) && chats[key].identifier == contact.pk) {
-                        updateActualChat(chats[key])
+                        updateActiveChat(chats[key])
                         exist = true
                         return;
                     }
@@ -112,24 +112,24 @@ export const ChatProvider = ({ children }) => {
                 // send trough proxy chat if chat doesnt exist
                 if (!exist) {
                     console.log('i am making a proxy')
-                    const tempChat = createProxyChat(contact.username, contact.pk)
+                    const tempChat = createProxyChat(contact.username, contact.pk,contact.avatar)
                     setProxyChat(tempChat)
-                    updateActualChat(tempChat)
+                    updateActiveChat(tempChat)
                 }
 
             })
             .catch(error => { console.error(error) })
     }
 
-    const createProxyChat = (name, receiver_pk) => ({ 'pk': 'proxy', 'identifier': receiver_pk, 'name': name })
+    const createProxyChat = (name, receiver_pk, img) => ({ 'pk': 'proxy', 'identifier': receiver_pk, 'name': name, messages: [], img: img })
 
     const state = {
         'chats': chats,
         'updateChats': updateChats,
         'getChats': retrieveChats,
         'markRead': markRead,
-        'actualChat': actualChat,
-        'updateActualChat': updateActualChat,
+        'activeChat': activeChat,
+        'updateActiveChat': updateActiveChat,
         'receiveMessage': receiveMessage,
         'connectWithUser': connectWithUser
     }

@@ -4,7 +4,7 @@ import ConnectionContext from '../../context/ConnectionContext'
 
 function ChatInput() {
   const { client } = useContext(ConnectionContext)
-  let { actualChat } = useContext(ChatContext)
+  let { activeChat } = useContext(ChatContext)
 
 
   let handleSubmit = (e) => {
@@ -12,7 +12,7 @@ function ChatInput() {
     console.log('submitting')
     client.send(JSON.stringify({
       'text': e.target.message.value,
-      'chat_room': actualChat.pk,
+      'chat_room': activeChat.pk,
       'type': 'chat_message',
     }));
     e.target.message.value = '';

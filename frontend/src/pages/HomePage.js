@@ -14,7 +14,7 @@ import { retrieveContacts } from '../service/ServiceApi';
 
 function HomePage() {
   let { client } = useContext(ConnectionContext)
-  let { chats, updateChats, actualChat, receiveMessage, getChats } = useContext(ChatContext)
+  let { chats, updateChats, activeChat, receiveMessage, getChats } = useContext(ChatContext)
   const [contacts, setContacts] = useState([])
   const { connect } = useContext(ConnectionContext)
   const { connectWithUser } = useContext(ChatContext)
@@ -58,7 +58,7 @@ function HomePage() {
     return (
       <>
         <ChatHeader />
-        <MessageList messages={actualChat.messages} />
+        <MessageList messages={activeChat.messages} />
         <ChatInput />
       </>
     )
@@ -94,7 +94,7 @@ function HomePage() {
         </div>
 
         <div className='p-0' id="main">
-          {actualChat
+          {activeChat
             ? <ChatWindow />
             : <><h3>Start chatting with friends</h3></>}
         </div>
