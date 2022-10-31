@@ -22,7 +22,6 @@ function RegistrationPage() {
         //TODO: add error fields to html
         validate: (values) => {
             const errors = {};
-            console.log(values)
 
             if (!values.username) {
                 errors.name = 'Required';

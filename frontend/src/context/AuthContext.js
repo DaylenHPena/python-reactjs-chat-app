@@ -43,9 +43,7 @@ export const AuthProvider = ({ children }) => {
                 .then((tokens) => {
                     setAuthTokens(tokens)
                     setUser(jwt_decode(tokens.access))
-                    console.log('user', user)
                     localStorage.setItem('authTokens', JSON.stringify(tokens))
-                    console.log('acces updated')
                 })
                 .catch(error => {
                     console.log('Error in updateToken: ', error)
@@ -58,18 +56,9 @@ export const AuthProvider = ({ children }) => {
     }
 
     useEffect(() => {
-
-        console.log('i am paying attntion to loading')
-
         if (loading) {
-            console.log('loading')
-
             updateToken()
         }
-        else {
-            console.log('not loading')
-        }
-
     }, [loading])
 
 

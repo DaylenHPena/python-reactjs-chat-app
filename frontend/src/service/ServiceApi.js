@@ -13,21 +13,14 @@ const AxiosInstance = axios.create({
 })
 
 AxiosInstance.interceptors.request.use(async req => {
-    console.log('I am an interceptor')
     const authTokens = getAuthTokens()
     if (authTokens) {
-        console.log('authTokens exists')
         const accessTokenDecoded = jwt_decode(authTokens.access)
         const expiration_time = dayjs.unix(accessTokenDecoded.exp)
         const now = dayjs()
-        console.log('expiration time', expiration_time)
-        console.log('now', now)
-        console.log('expiration_time-now', (expiration_time - now) < 0)
-        console.log('expiration_time.diff(now)', expiration_time.diff(now))
         if (accessTokenDecoded) {
             const is_expired = (expiration_time - now) < 0
             if (is_expired) {
-                console.log('accessToken is expired, attempt to get a new one')
                 refreshAccessToken()
                     .then((data) => { localStorage.setItem('authTokens', JSON.stringify(data)) })
 
@@ -55,7 +48,6 @@ export const getToken = (values) => {
         axios.post(`${baseURL}token/`, values, getConfig())
             .then(response => {
                 //returns the access and refresh token
-                //console.log('getToken', response.data)
                 resolve(response.data)
             }).catch(error => reject(error))
     })
@@ -66,7 +58,6 @@ export const refreshAccessToken = () => {
     return new Promise((resolve, reject) => {
         axios.post(`${baseURL}token/refresh/`, { 'refresh': authTokens.refresh })
             .then(response => {
-                //console.log('refreshAccessToken', response.data)
                 //returns a new access token
                 resolve(response.data)
             }).catch(error => reject(error))
@@ -80,7 +71,6 @@ export const connectWebSocket = (url) => {
         const access = authTokens.access
         const ws = new WebSocket(`ws://127.0.0.1:8000/ws/chat/${url}/?token=${access}`)
         ws.onopen = () => {
-            //console.log('WebSocket Client Connected');
         }
         return (ws)
     }
@@ -132,7 +122,6 @@ export const addContact = async (pk) => {
     return new Promise((resolve, reject) => {
         AxiosInstance.get(`add_contact/${pk}`, getConfig())
             .then(response => {
-                console.log('response.data', response.data)
                 resolve(response.data)
             }).catch(error => reject(error))
     })

@@ -1,0 +1,23 @@
+.chat-room a {
+  text-decoration: None;
+  color: inherit;
+}
+
+.chat-room {
+  transition: all 0.5s;
+  margin: auto 8px;
+
+}
+
+.chat-room:hover {
+  background-color: var(--chatlist-highlight-color);
+  border-radius: 4px;
+}
+
+.last-message {
+  font-size: 0.7rem;
+}
+
+.name{
+  color: var(--primary-color);
+}

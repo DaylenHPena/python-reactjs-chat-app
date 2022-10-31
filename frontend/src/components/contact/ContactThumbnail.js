@@ -11,7 +11,7 @@ export default function ContactThumbnail({ user, onClick }) {
                 <div className="me-3"><img src={avatar} className=' rounded-circle avatar-xs' /></div>
                 <div className='flex-grow-1'>
                     <div className='m-0 text-start mw-75'>
-                        <p className='fw-semibold m-0 text-truncate'>{username}</p>
+                        <p className='fw-semibold m-0 text-truncate name'>{username}</p>
                     </div>
                 </div>
             </div>

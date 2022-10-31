@@ -9,19 +9,21 @@ function ChatInput() {
 
   let handleSubmit = (e) => {
     e.preventDefault();
-    console.log('submitting')
-    client.send(JSON.stringify({
-      'text': e.target.message.value,
-      'chat_room': activeChat.pk,
-      'type': 'chat_message',
-    }));
+    if (e.target.message.value.trim() !== '')
+    {
+      client.send(JSON.stringify({
+        'text': e.target.message.value.trim(),
+        'chat_room': activeChat.pk,
+        'type': 'chat_message',
+      }));
+    }
     e.target.message.value = '';
   }
 
   return (
     <div className='position-relative'>
       <form id="message-form" onSubmit={handleSubmit}>
-        <input name="message" type="text" placeholder="Write a message..." className='form-control '></input>
+        <input name="message" type="text" placeholder="Write a message..." className='form-control'></input>
         <button type='submit' className="btn btn-outline-secondary"><i
           className="fa fa-paper-plane"></i></button>
       </form>

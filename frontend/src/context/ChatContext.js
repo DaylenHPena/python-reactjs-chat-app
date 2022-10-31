@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { retrieveChats, retrieveContact } from "../service/ServiceApi";
 
 
@@ -7,21 +7,31 @@ export default ChatContext
 
 export const ChatProvider = ({ children }) => {
 
-    const [chats, setchats] = useState([])
+    const [chats, setChats] = useState([])
     const [activeChat, setActiveChat] = useState(null)
-    const [proxyChat, setProxyChat] = useState(null)
 
-    const updateChats = (values) => {
-        setchats(values)
+    useEffect(() => {
         //update activeChat as well, cause it might have changed
-        for (const key in chats) {
-            if (chats[key]['pk'] === activeChat.pk) {
-                console.log('es el mimso que el actual debe actualizar')
-                setActiveChat(chats[key])
-                break;
+        if (activeChat) {
+            if (activeChat.pk == "proxy") {
+                for (const key in chats) {
+                    if (chats[key]['identifier'] === activeChat.identifier) {
+                        setActiveChat(chats[key])
+                        return;
+                    }
+                }
             }
+            else {
+                for (const key in chats) {
+                    if (chats[key]['pk'] === activeChat.pk) {
+                        setActiveChat(chats[key])
+                        return;
+                    }
+                }
+            }
+
         }
-    }
+    }, [chats])
 
     const receiveMessage = (message) => {
         //excepcts message to be {'type':'',....}
@@ -35,7 +45,7 @@ export const ChatProvider = ({ children }) => {
                     if (itChat.pk !== activeChat.pk) {
                         markUnread(itChat)
                     }
-                    updateChats([...chats])
+                    setChats([...chats])
                     return;
                 }
             }
@@ -43,27 +53,16 @@ export const ChatProvider = ({ children }) => {
 
         if (parsedMessage.type === "new_chat") {
             retrieveChats()
-                .then((apdatedChats) => {
-                    updateChats(apdatedChats)
-                    //check if the new chat is result of the proxy chat by checking the name
-                    if (activeChat.identifier == parsedMessage.room_name) {
-                        for (const key in chats) {
-                            const it_chat = chats[key]
-                            if (it_chat.identifier == parsedMessage.room_name) {
-                                updateActiveChat(it_chat)
-                            }
-                        }
-                    }
-
+                .then((updatedChats) => {
+                    setChats([...updatedChats])
                 })
-                .catch(error => { console.log('Error receiving new chat: ', error) })
         }
 
         else if (parsedMessage.type === "chat_message") {
             updateChatMessages(parsedMessage)
         }
 
-        else if (parsedMessage.type == 'connection on') { console.log(parsedMessage) }
+        else if (parsedMessage.type == 'connection on') { console.log('Connection on: ',parsedMessage) }
 
     }
 
@@ -79,26 +78,16 @@ export const ChatProvider = ({ children }) => {
         } else {
             chat['unread'] = 1
         }
-        console.log('chat[unread]', chat['unread'])
     }
 
     const updateActiveChat = (chat) => {
         markRead(chat)
         setActiveChat(chat)
-        console.log('activeChat !== proxyChat', activeChat !== proxyChat)
-        if (proxyChat && activeChat !== proxyChat) {
-            //clean  proxy chat
-            console.log('i clean proxy chat')
-            setProxyChat(null)
-        }
     }
 
     const connectWithUser = (pk) => {
-        console.log('proxyChat', proxyChat)
-
         retrieveContact(pk)
             .then(contact => {
-                console.log('data', contact)
                 //try to get an existing chat 
                 let exist = false
                 for (const key in chats) {
@@ -111,9 +100,7 @@ export const ChatProvider = ({ children }) => {
 
                 // send trough proxy chat if chat doesnt exist
                 if (!exist) {
-                    console.log('i am making a proxy')
-                    const tempChat = createProxyChat(contact.username, contact.pk,contact.avatar)
-                    setProxyChat(tempChat)
+                    const tempChat = createProxyChat(contact.username, contact.pk, contact.avatar)
                     updateActiveChat(tempChat)
                 }
 
@@ -125,7 +112,7 @@ export const ChatProvider = ({ children }) => {
 
     const state = {
         'chats': chats,
-        'updateChats': updateChats,
+        'setChats': setChats,
         'getChats': retrieveChats,
         'markRead': markRead,
         'activeChat': activeChat,

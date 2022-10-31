@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { addContact, searchUsers } from '../../../service/ServiceApi'
-import ToogleOffCanvas from '../../../utils/ToogleOffCanvas'
+import { addContact, searchUsers } from '../../service/ServiceApi'
+import ToogleOffCanvas from '../../utils/ToogleOffCanvas'
 import { AddContactThumbnail } from './AddContactThumbnail'
 
 export default function AddContactSidebar({ onNewContact }) {
@@ -29,7 +29,7 @@ export default function AddContactSidebar({ onNewContact }) {
 
     //TODO: get contacts only when this window is visible
     return (
-        <div id="add-contacts" className="offcanvas offcanvas-start p-0  border-opacity-50 pe-0 bg-sidebar">
+        <div id="add-contacts" className="offcanvas offcanvas-start p-0  border-opacity-50 pe-0">
             <div className="d-flex px-4 align-items-center top-nav bg-dark-nav">
                 <span className='fa fa-arrow-left me-2' id='close-contact-sidebar' onClick={ToogleOffCanvas} data-toogle="add-contacts"></span><p>New Contact</p>
             </div>

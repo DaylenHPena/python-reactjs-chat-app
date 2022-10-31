@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import React, { useContext, useState } from 'react'
 import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import './login.css'
 
 function LoginPage() {
     const [error, setError] = useState(false)

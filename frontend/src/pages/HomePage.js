@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import ChatList from '../components/leftSidebar/chatList/ChatList'
+import ChatList from '../components/chatList/ChatList'
 import ChatHeader from '../components/chatWindow/ChatHeader';
 import ChatInput from '../components/chatWindow/ChatInput';
 import MessageList from '../components/chatWindow/MessageList';
@@ -7,14 +7,15 @@ import UserConf from '../components/leftSidebar/UserConf'
 import ConnectionContext from '../context/ConnectionContext';
 import ChatContext from '../context/ChatContext';
 import ProfileSidebar from '../components/profile/ProfileSidebar';
-import ContactSidebar from '../components/leftSidebar/contact/ContactSidebar';
-import AddContactSidebar from '../components/leftSidebar/contact/AddContactSidebar';
+import ContactSidebar from '../components/contact/ContactSidebar';
+import AddContactSidebar from '../components/contact/AddContactSidebar';
 import { retrieveContacts } from '../service/ServiceApi';
+import './home.css'
 
 
 function HomePage() {
   let { client } = useContext(ConnectionContext)
-  let { chats, updateChats, activeChat, receiveMessage, getChats } = useContext(ChatContext)
+  let { chats, setChats, activeChat, receiveMessage, getChats } = useContext(ChatContext)
   const [contacts, setContacts] = useState([])
   const { connect } = useContext(ConnectionContext)
   const { connectWithUser } = useContext(ChatContext)
@@ -24,12 +25,12 @@ function HomePage() {
   useEffect(() => {
     //get all chats from database
     getChats()
-      .then((data) => { updateChats(data) })
+      .then((data) => { setChats(data) })
       .then(() => {
         retrieveContacts()
           .then(data => setContacts(data))
       })
-      .catch(error => { console.log('Unauthorized: ',error) })
+      .catch(error => { console.log('Unauthorized: ', error) })
   }, [])
 
   const onNewContact = (pk) => {
@@ -47,7 +48,6 @@ function HomePage() {
   // run on every render 
   useEffect(() => {
     if (client) {
-      //console.log('the client is here')
       client.onmessage = ((message) => {
         receiveMessage(message)
       })
@@ -84,10 +84,10 @@ function HomePage() {
       <div className='row m-0'>
 
         <ProfileSidebar />
-        <ContactSidebar contacts={contacts} onConnect={connectEvent}/>
+        <ContactSidebar contacts={contacts} onConnect={connectEvent} />
         <AddContactSidebar onNewContact={onNewContact} />
 
-        <div id="leftsidebar" className='p-0 bg-sidebar'>
+        <div id="leftsidebar" className='p-0'>
           <UserConf />
           <Search />
           <ChatList chats={chats} />
@@ -96,7 +96,10 @@ function HomePage() {
         <div className='p-0' id="main">
           {activeChat
             ? <ChatWindow />
-            : <><h3>Start chatting with friends</h3></>}
+            : <div className='connect'>
+              <h4 className='mt-5 '>Start chatting with friends</h4>
+              <img src='connect.jpg' className='connect-img mt-5'></img>
+            </div>}
         </div>
 
       </div>

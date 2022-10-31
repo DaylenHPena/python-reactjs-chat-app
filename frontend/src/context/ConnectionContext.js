@@ -29,7 +29,6 @@ export const ConnectionProvider = ({ children }) => {
         const ws = connectWebSocket(url)
         if (ws) {
             setClient(ws)
-            //console.log('client', client)
             setUrl(url)
 
         }
